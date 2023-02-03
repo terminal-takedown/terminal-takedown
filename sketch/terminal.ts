@@ -1,21 +1,16 @@
-const caretCoolDownDefault = 40
+const caretCoolDownDefault = 40;
 
 class Terminal {
-    prompt = 'root@local>'
-    bottom = 0
-    inputText = ''
-    caretCoolDown = caretCoolDownDefault
-
-    constructor(bottom: any) {
-        this.bottom = bottom
-    }
+    prompt = 'root@local>';
+    inputText = '';
+    caretCoolDown = caretCoolDownDefault;
 
     addKey() {
-        this.inputText += key
+        this.inputText += key;
     }
 
     backspace() {
-        this.inputText = this.inputText.substring(0, this.inputText.length - 1)
+        this.inputText = this.inputText.substring(0, this.inputText.length - 1);
     }
 
     draw() {
@@ -24,15 +19,15 @@ class Terminal {
                 this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : ''
             }`,
             10,
-            this.bottom - 20
-        )
-        --this.caretCoolDown
+            windowHeight - 20
+        );
+        --this.caretCoolDown;
         if (this.caretCoolDown < 0) {
-            this.caretCoolDown = caretCoolDownDefault
+            this.caretCoolDown = caretCoolDownDefault;
         }
     }
 
     send() {
-        this.inputText = ''
+        this.inputText = '';
     }
 }

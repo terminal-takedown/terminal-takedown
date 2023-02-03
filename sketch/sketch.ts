@@ -1,11 +1,14 @@
 let words: Word[] = [];
 
-const pixelSize = window.innerHeight;
-const terminal = new Terminal(pixelSize);
+const terminal = new Terminal();
 
 function setup() {
     textFont('monospace');
-    createCanvas(window.innerWidth, pixelSize);
+    createCanvas(windowWidth, windowHeight);
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 
 const commands = [
@@ -30,10 +33,10 @@ function draw() {
     terminal.draw();
     words.forEach((w) => w.update());
     words.forEach((w) => w.draw());
-    words = words.filter((w) => w.posY < pixelSize);
+    words = words.filter((w) => w.posY < windowHeight);
 
     if (words.length === 0) {
-        words.push(new Word(getCommand(), random(0, pixelSize), 1));
+        words.push(new Word(getCommand(), random(0, windowWidth), 1));
     }
 }
 
