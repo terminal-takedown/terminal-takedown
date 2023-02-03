@@ -1,5 +1,5 @@
 class Terminal {
-    prompt = "root@local$";
+    prompt = "root@local>";
     bottom = 0;
     inputText = "";
 
@@ -12,11 +12,15 @@ class Terminal {
     }
 
     backspace() {
-        this.inputText = this.inputText.substring(0, this.inputText.length - 2);
+        this.inputText = this.inputText.substring(0, this.inputText.length - 1);
     }
 
     draw() {
-        text(`${this.prompt} ${this.inputText}`, 10, this.bottom - 20);
+        text(`${this.prompt}${this.inputText}_`, 10, this.bottom - 20);
         this.input += key;
+    }
+
+    send() {
+        this.inputText = "";
     }
 }

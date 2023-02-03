@@ -4,6 +4,7 @@ const pixelSize = 800;
 const terminal = new Terminal(pixelSize);
 
 function setup() {
+    textFont("monospace");
     createCanvas(800, 800);
     words.push(new Word("hello", 40, 2));
     words.push(new Word("world", 400, 2));
@@ -23,11 +24,15 @@ function draw() {
 }
 
 function keyTyped() {
-    terminal.addKey();
+    if (key === "Enter") {
+        terminal.send();
+    } else {
+        terminal.addKey();
+    }
 }
 
 function keyPressed() {
-    if (key === "Backspace") {
+    if (keyCode === BACKSPACE) {
         terminal.backspace();
     }
 }
