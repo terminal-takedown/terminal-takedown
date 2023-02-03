@@ -24,7 +24,8 @@ function getCommand() {
 }
 
 function draw() {
-    background(255);
+    background(20);
+    fill(200);
 
     terminal.draw();
     words.forEach((w) => w.update());
@@ -32,7 +33,7 @@ function draw() {
     words = words.filter((w) => w.posY < pixelSize);
 
     if (words.length === 0) {
-        words.push(new Word(getCommand(), random(0, pixelSize), 2));
+        words.push(new Word(getCommand(), random(0, pixelSize), 1));
     }
 }
 
