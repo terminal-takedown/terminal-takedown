@@ -14,12 +14,19 @@ class Terminal {
     }
 
     draw() {
+        stroke(255);
+        fill(20);
+        rect(20, windowHeight - 80, windowWidth - 50, 50, 10);
+
+        fill(200);
+        noStroke();
+
         text(
             `${this.prompt}${this.inputText}${
                 this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : ''
             }`,
-            10,
-            windowHeight - 20
+            30,
+            windowHeight - 45
         );
         --this.caretCoolDown;
         if (this.caretCoolDown < 0) {

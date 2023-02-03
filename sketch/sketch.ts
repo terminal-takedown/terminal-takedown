@@ -29,7 +29,6 @@ function getCommand() {
 
 function draw() {
     background(20);
-    fill(200);
 
     terminal.draw();
     words.forEach((w) => w.update());

@@ -16,6 +16,8 @@ class Word {
 
     public draw() {
         textSize(32);
+        fill(200);
+        noStroke();
         text(this.text, this.posX, this.posY);
     }
 }
