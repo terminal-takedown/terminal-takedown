@@ -1,17 +1,17 @@
 let words: Word[] = []
 
-const pixelSize = 800
+const pixelSize = window.innerHeight
 const terminal = new Terminal(pixelSize)
 
 function setup() {
     textFont('monospace')
-    createCanvas(800, 800)
+    createCanvas(800, pixelSize)
     words.push(new Word('hello', 40, 2))
     words.push(new Word('world', 400, 2))
 }
 
 function draw() {
-    background(255)
+    background(200)
 
     terminal.draw()
     words.forEach((w) => w.update())
