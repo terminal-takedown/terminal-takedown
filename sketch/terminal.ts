@@ -4,6 +4,7 @@ class Terminal {
     prompt = 'root@local>';
     inputText = '';
     caretCoolDown = caretCoolDownDefault;
+    shake = false;
 
     addKey() {
         this.inputText += key;
@@ -14,6 +15,12 @@ class Terminal {
     }
 
     draw() {
+        const x_random = random(-5, 5);
+        const y_random = random(-5, 5);
+        if (this.shake === true) {
+            translate(x_random, y_random);
+        }
+
         stroke(255);
         noFill();
         rect(20, windowHeight - 80, windowWidth - 50, 50, 10);
@@ -32,9 +39,18 @@ class Terminal {
         if (this.caretCoolDown < 0) {
             this.caretCoolDown = caretCoolDownDefault;
         }
+
+        if (this.shake === true) {
+            translate(-x_random, -y_random);
+        }
     }
 
     send() {
         this.inputText = '';
+    }
+
+    toggleShake() {
+        console.log('shake');
+        this.shake = !this.shake;
     }
 }

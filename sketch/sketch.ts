@@ -56,6 +56,9 @@ function keyTyped() {
 }
 
 function keyPressed() {
+    if (keyCode === DOWN_ARROW) {
+        terminal.toggleShake();
+    }
     if (keyCode === BACKSPACE) {
         terminal.backspace();
     }
