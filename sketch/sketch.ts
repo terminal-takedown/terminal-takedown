@@ -16,7 +16,8 @@ const commands = [
     'close port {randi}',
     'start process --id {randi}',
     'update firewall',
-    'close connection {randi} --force',
+    'close connection {randi}',
+    'stop download --force',
 ];
 
 function getCommand() {
