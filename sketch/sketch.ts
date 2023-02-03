@@ -5,7 +5,7 @@ const terminal = new Terminal(pixelSize);
 
 function setup() {
     textFont('monospace');
-    createCanvas(800, pixelSize);
+    createCanvas(window.innerWidth, pixelSize);
 }
 
 const commands = [
