@@ -38,6 +38,13 @@ function draw() {
 
 function keyTyped() {
     if (key === 'Enter') {
+        console.log(
+            `${terminal.inputText}`,
+            `${words.map((w) => w.text).join(' ')}`
+        );
+        if (terminal.inputText === words.map((w) => w.text).join(' ')) {
+            words = [];
+        }
         terminal.send();
     } else {
         terminal.addKey();
