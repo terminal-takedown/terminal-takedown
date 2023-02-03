@@ -15,7 +15,7 @@ class Terminal {
 
     draw() {
         stroke(255);
-        fill(20);
+        noFill();
         rect(20, windowHeight - 80, windowWidth - 50, 50, 10);
 
         fill(200);
