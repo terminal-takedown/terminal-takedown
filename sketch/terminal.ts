@@ -11,17 +11,21 @@ class Terminal {
     shake = false;
     termHeight: number;
     highlightColor: 'lightgreen' | 'red' | null = null;
+    textChangeCallback: (text: string) => void;
 
-    constructor(height: number) {
+    constructor(height: number, textChangeCallback: (text: string) => void) {
         this.termHeight = height;
+        this.textChangeCallback = textChangeCallback;
     }
 
     addKey() {
         this.inputText += key;
+        this.textChangeCallback(this.inputText);
     }
 
     backspace() {
         this.inputText = this.inputText.substring(0, this.inputText.length - 1);
+        this.textChangeCallback(this.inputText);
     }
 
     draw() {
@@ -57,12 +61,14 @@ class Terminal {
 
     send() {
         this.inputText = '';
+        this.textChangeCallback(this.inputText);
     }
 
     failedToEnterCommand() {
         this.toggleShake();
         this.highlight('red', ERROR_DELAY, () => this.toggleShake());
     }
+
     sentWrongCommand() {
         this.highlight('red', ERROR_DELAY);
         setTimeout(() => {

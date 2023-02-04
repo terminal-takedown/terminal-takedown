@@ -2,7 +2,11 @@ let command: Command | null = null;
 
 const terminal_height = 80;
 const terminal_spacing = 20;
-const terminal = new Terminal(terminal_height);
+const terminal = new Terminal(terminal_height, (text) => {
+    if (command) {
+        command.setTerminalText(text);
+    }
+});
 
 const COMMAND_TIMEOUT = 250;
 
@@ -74,9 +78,6 @@ function keyTyped() {
         }
     } else {
         terminal.addKey();
-        if (command) {
-            command.setTerminalText(terminal.inputText);
-        }
     }
 }
 
@@ -95,9 +96,6 @@ function keyPressed() {
     }
     if (keyCode === BACKSPACE) {
         terminal.backspace();
-        if (command) {
-            command.setTerminalText(terminal.inputText);
-        }
     }
 }
 
@@ -106,7 +104,7 @@ function queueNewCommand() {
         const commandText = getCommand();
         command = new Command(
             commandText,
-            Math.floor(random(500, windowWidth - textWidth(commandText) - 100)),
+            Math.floor(random(20, windowWidth - textWidth(commandText) - 100)),
             1,
             terminal.inputText
         );
