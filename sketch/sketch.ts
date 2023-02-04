@@ -11,10 +11,14 @@ const glitch = new Glitch();
 
 const COMMAND_TIMEOUT = 250;
 
+let particles: CharParticle[] = [];
+
 function setup() {
     textFont('monospace');
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
+
+    particles.push(new CharParticle('f', 400, 400));
 }
 
 function windowResized() {
@@ -78,6 +82,10 @@ function draw() {
             queueNewCommand();
         }
     }
+
+    particles.forEach((p) => p.draw());
+    particles.forEach((p) => p.update());
+    particles = particles.filter((p) => p.posY <= windowHeight);
 }
 
 function keyTyped() {
