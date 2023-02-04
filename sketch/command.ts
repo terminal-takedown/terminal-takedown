@@ -17,7 +17,7 @@ class Command {
         this.posY += windowHeight / (Command.commandSpeed * 500);
     }
 
-    splitText(): [typedText: string, untypedText: string] {
+    splitText(): [string, string] {
         if (this.terminalText.length === 0) {
             return ['', this.text];
         }

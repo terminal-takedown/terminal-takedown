@@ -130,7 +130,7 @@ function draw() {
         particles = particles.filter((p) => p.posY <= windowHeight);
 
         if (failCount >= 10) {
-            stop();
+            stopGame();
         }
     } else if (gameState === 'dead') {
         fill(200);
@@ -176,7 +176,7 @@ function keyTyped() {
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
         ) {
-            start();
+            startGame();
         } else {
             if (terminal.inputText === command?.text) {
                 terminal.success();
@@ -193,7 +193,7 @@ function keyTyped() {
     }
 }
 
-function start() {
+function startGame() {
     glitch = new Glitch();
     gameState = 'running';
     terminal.prompt = 'root@server>';
@@ -202,7 +202,7 @@ function start() {
     Command.restSpeed();
 }
 
-function stop() {
+function stopGame() {
     gameState = 'dead';
     terminal.prompt = 'root@local>';
     terminal.inputText = '';
@@ -231,7 +231,7 @@ function keyPressed() {
         keyCode === ESCAPE &&
         (gameState === 'initial' || gameState === 'dead')
     ) {
-        start();
+        startGame();
     }
 }
 
