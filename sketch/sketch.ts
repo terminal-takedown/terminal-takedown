@@ -21,6 +21,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
     terminal.unlockInput();
+    document.getElementById('hidden-input').focus();
 }
 
 function windowResized() {
