@@ -146,7 +146,7 @@ function draw() {
     } else if (gameState === 'dead') {
         fill(200);
         textSize(32);
-        const messageTop = '[FTL] Your server has been compromised';
+        const messageTop = '[FATAL] Your server has been compromised';
         const messageCommand = "[INFO] type 'ssh server' to try again";
         const messageScore = `[DEBUG] Defended ${score} attack${
             score === 1 ? '' : 's'
@@ -253,8 +253,9 @@ function keyPressed() {
     }
 }
 
-function touchStarted() {
+function mousePressed() {
     document.getElementById('hidden-input').focus();
+    console.log('pressed start');
 }
 
 function updateSpeed() {
