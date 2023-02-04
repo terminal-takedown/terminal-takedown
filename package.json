@@ -8,7 +8,7 @@
         "start-compile": "tsc --watch",
         "start-run": "http-server . -p 3000",
         "build": "tsc --outDir build/build",
-        "postbuild": "cp index.html build/index.html && mkdir build/assets && cp assets/favicon.ico build/assets/favicon.ico && cp assets/icon.png build/assets/icon.png"
+        "postbuild": "cp index.html build/index.html && mkdir build/assets && cp assets/favicon.ico build/assets/favicon.ico && cp assets/icon.png build/assets/icon.png && cp style.css build/style.css"
     },
     "homepage": "https://github.com/Gaweph/p5-typescript-starter#readme",
     "devDependencies": {
