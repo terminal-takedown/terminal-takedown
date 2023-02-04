@@ -214,6 +214,7 @@ function keyTyped() {
         ) {
             localStorage.setItem('debug', 'true');
             alert('debug active');
+            terminal.inputText = '';
         }
         if (
             (gameState === 'initial' || gameState === 'dead') &&
