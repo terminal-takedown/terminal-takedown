@@ -21,7 +21,6 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
     terminal.unlockInput();
-    document.getElementById('hidden-input').focus();
 }
 
 function windowResized() {
@@ -252,6 +251,10 @@ function keyPressed() {
     ) {
         startGame();
     }
+}
+
+function touchStarted() {
+    document.getElementById('hidden-input').focus();
 }
 
 function updateSpeed() {
