@@ -65,7 +65,7 @@ class Glitch {
             color: colors[Math.floor(Math.random() * 7)],
             x: Math.random() * innerWidth,
             y: Math.random() * innerHeight - 80 - 20,
-            w: Math.random() * 100,
+            w: Math.random() * 80 + 10,
             h: Math.random() * 5,
         });
     };
