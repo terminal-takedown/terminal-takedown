@@ -84,12 +84,13 @@ class Glitch {
     };
 
     addPermanentGlitch = () => {
+        const fett = Math.random();
         permanentGlitches.push({
             color: colors[Math.floor(Math.random() * 7)],
             x: Math.random() * innerWidth,
             y: Math.random() * innerHeight - 80 - 20,
             w: Math.random() * 80 + 10,
-            h: Math.random() * 5,
+            h: fett < 0.75 ? Math.random() * 3 : Math.random() * 5,
         });
     };
 
