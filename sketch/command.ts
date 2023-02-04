@@ -55,4 +55,8 @@ class Command {
     increaseSpeed() {
         commandSpeed -= 0.1;
     }
+
+    restSpeed() {
+        commandSpeed = 1;
+    }
 }

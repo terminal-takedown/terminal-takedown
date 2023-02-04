@@ -176,6 +176,7 @@ function start() {
     terminal.prompt = 'root@server>';
     terminal.inputText = '';
     failcount = 0;
+    command.restSpeed();
 }
 
 function stop() {
