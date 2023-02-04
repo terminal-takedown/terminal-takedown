@@ -16,11 +16,11 @@ type PermanentGlitch = {
     h: number;
 };
 
-const permanentGlitches: PermanentGlitch[] = [];
 let linePos = 0,
     rAF;
 
 class Glitch {
+    permanentGlitches: PermanentGlitch[] = [];
     glitchFrames = 0;
     drawGlitches = () => {
         //rAF = window.requestAnimationFrame(this.draw);
@@ -50,7 +50,7 @@ class Glitch {
         );
     };
     drawPermanentGlitches = () => {
-        permanentGlitches.forEach((element) => {
+        this.permanentGlitches.forEach((element) => {
             const offset = random(-1, 1);
             fill(element.color);
 
@@ -85,7 +85,7 @@ class Glitch {
 
     addPermanentGlitch = () => {
         const fett = Math.random();
-        permanentGlitches.push({
+        this.permanentGlitches.push({
             color: colors[Math.floor(Math.random() * 7)],
             x: Math.random() * innerWidth,
             y: Math.random() * innerHeight - 80 - 20,

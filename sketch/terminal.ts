@@ -42,8 +42,6 @@ class Terminal {
         fill(this.highlightColor ?? defaultColor);
         noStroke();
 
-        textSize(32);
-
         text(
             `${this.prompt}${this.inputText}${
                 this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : ''

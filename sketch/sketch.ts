@@ -7,7 +7,7 @@ const terminal = new Terminal(terminal_height, (text) => {
         command.setTerminalText(text);
     }
 });
-const glitch = new Glitch();
+let glitch = new Glitch();
 
 const COMMAND_TIMEOUT = 250;
 
@@ -59,6 +59,7 @@ let failcount = 0;
 
 function draw() {
     background(20);
+    textSize(32);
 
     if (gameState === 'initial') {
         fill(200);
@@ -113,11 +114,22 @@ function draw() {
         particles.forEach((p) => p.draw());
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
+
+        if (failcount >= 10) {
+            stop();
+        }
     } else if (gameState === 'dead') {
-        const message = "type 'reboot' to try again";
+        fill(200);
+        const messageTop = '[FTL] Your server has been compromised';
+        const messageCommand = "[INFO] type 'ssh server' to try again";
         text(
-            message,
-            windowWidth / 2 - textWidth(message) / 2,
+            messageTop,
+            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowHeight / 2 - 40
+        );
+        text(
+            messageCommand,
+            windowWidth / 2 - textWidth(messageCommand) / 2,
             windowHeight / 2
         );
     }
@@ -137,7 +149,10 @@ function draw() {
 
 function keyTyped() {
     if (key === 'Enter') {
-        if (gameState === 'initial' && terminal.inputText === 'ssh server') {
+        if (
+            (gameState === 'initial' || gameState === 'dead') &&
+            terminal.inputText === 'ssh server'
+        ) {
             start();
         } else {
             if (terminal.inputText === command?.text) {
@@ -154,8 +169,16 @@ function keyTyped() {
 }
 
 function start() {
+    glitch = new Glitch();
     gameState = 'running';
     terminal.prompt = 'root@server>';
+    terminal.inputText = '';
+    failcount = 0;
+}
+
+function stop() {
+    gameState = 'dead';
+    terminal.prompt = 'root@local>';
     terminal.inputText = '';
 }
 
@@ -178,7 +201,10 @@ function keyPressed() {
     if (keyCode === 171) {
         command.increaseSpeed();
     }
-    if (keyCode === ESCAPE && gameState === 'initial') {
+    if (
+        keyCode === ESCAPE &&
+        (gameState === 'initial' || gameState === 'dead')
+    ) {
         start();
     }
 }
