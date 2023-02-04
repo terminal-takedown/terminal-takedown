@@ -97,6 +97,9 @@ function keyPressed() {
     if (keyCode === BACKSPACE) {
         terminal.backspace();
     }
+    if (keyCode === 171) {
+        command.increaseSpeed();
+    }
 }
 
 function queueNewCommand() {

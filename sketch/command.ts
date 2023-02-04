@@ -1,6 +1,7 @@
+let speed = 1;
+
 class Command {
     posY = 0;
-    speed = 1;
     posX = 0;
     text = '';
     terminalText = '';
@@ -8,12 +9,11 @@ class Command {
     constructor(text: string, x: number, speed: number, terminalText: string) {
         this.posX = x;
         this.text = text;
-        this.speed = speed;
         this.terminalText = terminalText;
     }
 
     update() {
-        this.posY += windowHeight / (this.speed * 500);
+        this.posY += windowHeight / (speed * 500);
     }
 
     splitText(): [typedText: string, untypedText: string] {
@@ -49,5 +49,9 @@ class Command {
 
     setTerminalText(text: string) {
         this.terminalText = text;
+    }
+
+    increaseSpeed() {
+        speed -= 0.1;
     }
 }
