@@ -2,8 +2,8 @@ class CharParticle {
     char = '';
     posX = 0;
     posY = 0;
-    velocityY = -5;
-    velocityX = random(0, 20);
+    velocityY = random(-3, -6);
+    velocityX = random(-10, 10);
 
     constructor(char: string, x: number, y: number) {
         this.char = char;
@@ -19,12 +19,14 @@ class CharParticle {
 
         if (this.velocityX > 0) {
             this.velocityX -= 1;
+        } else if (this.velocityX < 0) {
+            this.velocityX += 1;
         }
     }
 
     draw() {
         textSize(32);
-        fill(200);
+        fill('red');
         noStroke();
         text(this.char, this.posX, this.posY);
     }

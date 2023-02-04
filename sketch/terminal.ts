@@ -67,6 +67,8 @@ class Terminal {
     failedToEnterCommand() {
         this.toggleShake();
         this.highlight('red', ERROR_DELAY, () => this.toggleShake());
+        this.inputText = '';
+        this.textChangeCallback(this.inputText);
     }
 
     sentWrongCommand() {

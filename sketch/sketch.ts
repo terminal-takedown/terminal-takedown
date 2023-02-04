@@ -17,8 +17,6 @@ function setup() {
     textFont('monospace');
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
-
-    particles.push(new CharParticle('f', 400, 400));
 }
 
 function windowResized() {
@@ -75,6 +73,16 @@ function draw() {
         if (command.posY > windowHeight - terminal_height - terminal_spacing) {
             failcount++;
             this.glitchy = true;
+            const failedText = terminal.inputText;
+
+            for (let i = 0; i < failedText.length; i++) {
+                const particle = new CharParticle(
+                    failedText[i],
+                    textWidth(terminal.prompt) + 30 + textWidth('a') * i + 10,
+                    windowHeight - 60
+                );
+                particles.push(particle);
+            }
 
             terminal.failedToEnterCommand();
 
