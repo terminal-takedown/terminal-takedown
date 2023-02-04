@@ -137,10 +137,6 @@ function draw() {
         particles.forEach((p) => p.draw());
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
-
-        if (failCount >= GAME_ROUNDS) {
-            stopGame();
-        }
     } else if (gameState === 'dead') {
         fill(200);
         textSize(32);
