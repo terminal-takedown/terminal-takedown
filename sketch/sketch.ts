@@ -39,11 +39,11 @@ function draw() {
     if (command !== null) {
         command.update();
         command.draw();
-        console.log(command.posY);
+
         if (command.posY > windowHeight - terminal_height - terminal_spacing) {
             terminal.toggleShake();
             command = null;
-            //queueNewCommand();
+            queueNewCommand(() => terminal.toggleShake());
         }
     }
 }
@@ -69,8 +69,11 @@ function keyPressed() {
     }
 }
 
-function queueNewCommand() {
+function queueNewCommand(cb?: () => void) {
     setTimeout(() => {
         command = new Command(getCommand(), random(0, windowWidth), 0.5);
+        if (cb) {
+            cb();
+        }
     }, COMMAND_TIMEOUT);
 }
