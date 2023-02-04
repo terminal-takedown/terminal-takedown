@@ -209,6 +209,13 @@ function draw() {
 function keyTyped() {
     if (key === 'Enter') {
         if (
+            terminal.inputText === 'debug' &&
+            localStorage.getItem('debug') !== 'true'
+        ) {
+            localStorage.setItem('debug', 'true');
+            alert('debug active');
+        }
+        if (
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
         ) {
@@ -252,6 +259,14 @@ function stopGame() {
 }
 
 function keyPressed() {
+    if (keyCode === BACKSPACE) {
+        terminal.backspace();
+    }
+
+    // debug keys
+    if (localStorage.getItem('debug') !== 'true') {
+        return;
+    }
     if (keyCode === DOWN_ARROW) {
         terminal.toggleShake();
     }
@@ -263,9 +278,6 @@ function keyPressed() {
         setTimeout(() => {
             terminal.toggleShake();
         }, 100);
-    }
-    if (keyCode === BACKSPACE) {
-        terminal.backspace();
     }
     if (keyCode === 171) {
         Command.increaseSpeed();
