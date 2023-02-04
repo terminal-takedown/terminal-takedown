@@ -38,16 +38,18 @@ class Glitch {
     };
 
     drawGlitchLine = () => {
-        const myrand = Math.floor(Math.random() * 7);
-        const randomColor = colors[myrand];
+        for (let i = 0; i < 6; i++) {
+            const myrand = Math.floor(Math.random() * 7);
+            const randomColor = colors[myrand];
 
-        fill(randomColor);
-        rect(
-            Math.random() * innerWidth,
-            Math.random() * innerHeight,
-            Math.random() * 100,
-            Math.random() * 5
-        );
+            fill(randomColor);
+            rect(
+                Math.random() * innerWidth,
+                Math.random() * innerHeight,
+                Math.random() * 100,
+                Math.random() * 5
+            );
+        }
     };
     drawPermanentGlitches = () => {
         this.permanentGlitches.forEach((element) => {
@@ -84,22 +86,26 @@ class Glitch {
     };
 
     addPermanentGlitch = () => {
-        const fett = Math.random();
-        this.permanentGlitches.push({
-            color: colors[Math.floor(Math.random() * 7)],
-            x: Math.random() * innerWidth,
-            y: Math.random() * innerHeight - 80 - 20,
-            w: Math.random() * 80 + 10,
-            h: fett < 0.75 ? Math.random() * 3 : Math.random() * 5,
-        });
+        for (let i = 0; i < random(2, 5); i++) {
+            const fett = Math.random();
+            const gray = Math.random() > 0.4;
+            this.permanentGlitches.push({
+                color: gray
+                    ? `rgba(255,255,255,${random(0.4, 1)})`
+                    : colors[Math.floor(Math.random() * 7)],
+                x: Math.random() * innerWidth,
+                y: Math.random() * innerHeight - 80 - 20,
+                w: Math.random() * 80 + 10,
+                h: fett < 0.75 ? Math.random() * 3 : Math.random() * 5,
+            });
+        }
     };
 
     enterGlitchMode = () => {
         fill('#1a191c');
         rect(0, 0, innerWidth, innerHeight);
 
-        for (let i = 0; i < 400; i++) {
-            if (i % 3) continue;
+        for (let i = 0; i < 350; i++) {
             fill(`rgba(255, 255, 255, ${Math.random() * 0.01})`);
             rect(
                 Math.floor(Math.random() * innerWidth),
