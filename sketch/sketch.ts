@@ -17,6 +17,7 @@ let particles: CharParticle[] = [];
 
 function setup() {
     textFont('monospace');
+    pixelDensity(1);
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
     terminal.unlockInput();
