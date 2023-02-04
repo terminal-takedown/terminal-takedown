@@ -53,6 +53,7 @@ function keyTyped() {
         console.log(`${terminal.inputText}`, `${command.text}`);
         if (terminal.inputText === command.text) {
             command = null;
+            queueNewCommand();
         }
         terminal.send();
     } else {
@@ -72,6 +73,8 @@ function keyPressed() {
 function queueNewCommand(cb?: () => void) {
     setTimeout(() => {
         command = new Command(getCommand(), random(0, windowWidth), 0.5);
+        console.log(command.text);
+
         if (cb) {
             cb();
         }
