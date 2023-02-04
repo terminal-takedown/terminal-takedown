@@ -73,9 +73,6 @@ class Terminal {
 
     sentWrongCommand() {
         this.highlight('red', ERROR_DELAY);
-        setTimeout(() => {
-            terminal.send();
-        }, SUCCESS_DELAY);
     }
 
     success() {

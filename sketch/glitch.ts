@@ -55,8 +55,11 @@ class Glitch {
     };
     drawPermanentGlitches = () => {
         permanentGlitches.forEach((element) => {
-            fill(element.color);
+            const offset = random(-1, 1);
+            fill(random(colors));
+            translate(offset, offset);
             rect(element.x, element.y, element.w, element.h);
+            translate(-offset, -offset);
         });
     };
 
