@@ -178,17 +178,17 @@ function draw() {
         }`;
         text(
             messageTop,
-            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowWidth / 2 - textWidth(messageTop) / 2,
             windowHeight / 2 - 40
         );
         text(
             messageCommand,
-            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowWidth / 2 - textWidth(messageTop) / 2,
             windowHeight / 2
         );
         text(
             messageScore,
-            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowWidth / 2 - textWidth(messageTop) / 2,
             windowHeight / 2 + 40
         );
     }
