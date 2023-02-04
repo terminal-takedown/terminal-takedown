@@ -98,8 +98,8 @@ class Glitch {
         fill('#1a191c');
         rect(0, 0, innerWidth, innerHeight);
 
-        for (let i = 0; i < 200; i++) {
-            if (i % 2) continue;
+        for (let i = 0; i < 400; i++) {
+            if (i % 3) continue;
             fill(`rgba(255, 255, 255, ${Math.random() * 0.01})`);
             rect(
                 Math.floor(Math.random() * innerWidth),

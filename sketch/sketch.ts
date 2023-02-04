@@ -87,7 +87,7 @@ function draw() {
             ) {
                 failcount++;
 
-                glitch.addGlitchFrames(10);
+                glitch.addGlitchFrames(15);
                 glitch.addPermanentGlitch();
                 const failedText = terminal.inputText;
 
