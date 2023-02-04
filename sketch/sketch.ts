@@ -1,10 +1,15 @@
-let words: Word[] = [];
+let command: Command | null = null;
 
-const terminal = new Terminal();
+const terminal_height = 80;
+const terminal_spacing = 20;
+const terminal = new Terminal(terminal_height);
+
+const COMMAND_TIMEOUT = 250;
 
 function setup() {
     textFont('monospace');
     createCanvas(windowWidth, windowHeight);
+    queueNewCommand();
 }
 
 function windowResized() {
@@ -31,23 +36,23 @@ function draw() {
     background(20);
 
     terminal.draw();
-    words.forEach((w) => w.update());
-    words.forEach((w) => w.draw());
-    words = words.filter((w) => w.posY < windowHeight);
-
-    if (words.length === 0) {
-        words.push(new Word(getCommand(), random(0, windowWidth), 1));
+    if (command !== null) {
+        command.update();
+        command.draw();
+        console.log(command.posY);
+        if (command.posY > windowHeight - terminal_height - terminal_spacing) {
+            terminal.toggleShake();
+            command = null;
+            //queueNewCommand();
+        }
     }
 }
 
 function keyTyped() {
     if (key === 'Enter') {
-        console.log(
-            `${terminal.inputText}`,
-            `${words.map((w) => w.text).join(' ')}`
-        );
-        if (terminal.inputText === words.map((w) => w.text).join(' ')) {
-            words = [];
+        console.log(`${terminal.inputText}`, `${command.text}`);
+        if (terminal.inputText === command.text) {
+            command = null;
         }
         terminal.send();
     } else {
@@ -62,4 +67,10 @@ function keyPressed() {
     if (keyCode === BACKSPACE) {
         terminal.backspace();
     }
+}
+
+function queueNewCommand() {
+    setTimeout(() => {
+        command = new Command(getCommand(), random(0, windowWidth), 0.5);
+    }, COMMAND_TIMEOUT);
 }

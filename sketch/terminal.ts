@@ -5,6 +5,11 @@ class Terminal {
     inputText = '';
     caretCoolDown = caretCoolDownDefault;
     shake = false;
+    termHeight: number;
+
+    constructor(height: number) {
+        this.termHeight = height;
+    }
 
     addKey() {
         this.inputText += key;
@@ -23,7 +28,7 @@ class Terminal {
 
         stroke(255);
         noFill();
-        rect(20, windowHeight - 80, windowWidth - 50, 50, 10);
+        rect(20, windowHeight - this.termHeight, windowWidth - 50, 50, 10);
 
         fill(200);
         noStroke();

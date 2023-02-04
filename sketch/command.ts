@@ -1,4 +1,4 @@
-class Word {
+class Command {
     posY = 0;
     speed = 1;
     posX = 0;
