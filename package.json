@@ -8,7 +8,7 @@
         "start-compile": "tsc --watch",
         "start-run": "http-server . -p 3000",
         "build": "tsc",
-        "postbuild": "mkdir -p build/build && mkdir build/tmp && mv build/* build/tmp/ && mv build/tmp/* build/build/ && cp index.html build/index.html && rm -rf build/tmp"
+        "postbuild": "mkdir -p build/build && mkdir tmp && mv build/* tmp/ && mv tmp/* build/build/ && cp index.html build/index.html && rm -rf tmp"
     },
     "homepage": "https://github.com/Gaweph/p5-typescript-starter#readme",
     "devDependencies": {
