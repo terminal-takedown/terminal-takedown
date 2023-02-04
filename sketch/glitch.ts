@@ -27,9 +27,8 @@ class Glitch {
         if (this.glitchFrames > 0) {
             this.enterGlitchMode();
             this.glitchFrames -= 1;
-        } else {
-            this.drawPermanentGlitches();
         }
+        this.drawPermanentGlitches();
 
         //ctx.setTransform(1, 0, 0, .8, .2, 0);
     };
