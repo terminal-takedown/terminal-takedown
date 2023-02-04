@@ -291,11 +291,6 @@ function keyPressed() {
     }
 }
 
-function mousePressed() {
-    document.getElementById('hidden-input').focus();
-    console.log('pressed start');
-}
-
 function updateSpeed() {
     if ((score + failCount) % 3 == 0) {
         Command.increaseSpeed();
