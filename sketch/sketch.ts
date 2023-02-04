@@ -1,5 +1,7 @@
 let command: Command | null = null;
 
+const GAME_ROUNDS = 10;
+
 const terminal_height = 80;
 const terminal_spacing = 20;
 const terminal = new Terminal(terminal_height, (text) => {
@@ -120,8 +122,15 @@ function draw() {
                 terminal.failedToEnterCommand();
 
                 command = null;
-                queueNewCommand();
-                updateSpeed();
+                if (failCount >= GAME_ROUNDS) {
+                    terminal.inputText = 'exit';
+                    setTimeout(() => {
+                        stopGame();
+                    }, 1200);
+                } else {
+                    queueNewCommand();
+                    updateSpeed();
+                }
             }
         }
 
@@ -129,7 +138,7 @@ function draw() {
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
 
-        if (failCount >= 10) {
+        if (failCount >= GAME_ROUNDS) {
             stopGame();
         }
     } else if (gameState === 'dead') {
@@ -176,7 +185,9 @@ function keyTyped() {
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
         ) {
-            startGame();
+            terminal.success(() => {
+                startGame();
+            });
         } else {
             if (terminal.inputText === command?.text) {
                 terminal.success();
@@ -201,12 +212,14 @@ function startGame() {
     failCount = 0;
     score = 0;
     Command.restSpeed();
+    queueNewCommand(0);
 }
 
 function stopGame() {
     gameState = 'dead';
     terminal.prompt = 'root@local>';
     terminal.inputText = '';
+    particles = [];
 }
 
 function keyPressed() {
@@ -242,15 +255,20 @@ function updateSpeed() {
     }
 }
 
-function queueNewCommand() {
-    setTimeout(() => {
-        textSize(32);
-        const commandText = getCommand();
-        command = new Command(
-            commandText,
-            Math.floor(random(20, windowWidth - textWidth(commandText) - 100)),
-            terminal.inputText
-        );
-        console.log(command.text);
-    }, COMMAND_TIMEOUT);
+function queueNewCommand(specialTimeout: number | undefined = undefined) {
+    setTimeout(
+        () => {
+            textSize(32);
+            const commandText = getCommand();
+            command = new Command(
+                commandText,
+                Math.floor(
+                    random(20, windowWidth - textWidth(commandText) - 100)
+                ),
+                terminal.inputText
+            );
+            console.log(command.text);
+        },
+        specialTimeout !== undefined ? specialTimeout : COMMAND_TIMEOUT
+    );
 }

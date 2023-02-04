@@ -75,11 +75,12 @@ class Terminal {
         this.highlight('red', ERROR_DELAY);
     }
 
-    success() {
+    success(cb?: () => void) {
         this.highlight('lightgreen', SUCCESS_DELAY);
 
         setTimeout(() => {
             terminal.send();
+            if (cb) cb();
         }, SUCCESS_DELAY);
     }
 
