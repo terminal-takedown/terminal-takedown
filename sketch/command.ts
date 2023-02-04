@@ -51,11 +51,12 @@ class Command {
         this.terminalText = text;
     }
 
-    increaseSpeed() {
+    static increaseSpeed() {
         Command.commandSpeed -= Command.commandSpeed * 0.1;
+        console.log('new speed', Command.commandSpeed);
     }
 
-    restSpeed() {
+    static restSpeed() {
         Command.commandSpeed = 1;
     }
 }

@@ -56,6 +56,7 @@ function getCommand(): string {
 }
 
 let failcount = 0;
+let score = 0;
 
 function draw() {
     background(20);
@@ -109,6 +110,7 @@ function draw() {
 
                 command = null;
                 queueNewCommand();
+                updateSpeed();
             }
         }
 
@@ -161,6 +163,8 @@ function keyTyped() {
                 terminal.success();
                 command = null;
                 queueNewCommand();
+                updateSpeed();
+                ++score;
             } else {
                 terminal.sentWrongCommand();
             }
@@ -176,7 +180,7 @@ function start() {
     terminal.prompt = 'root@server>';
     terminal.inputText = '';
     failcount = 0;
-    command.restSpeed();
+    Command.restSpeed();
 }
 
 function stop() {
@@ -202,13 +206,19 @@ function keyPressed() {
         terminal.backspace();
     }
     if (keyCode === 171) {
-        command.increaseSpeed();
+        Command.increaseSpeed();
     }
     if (
         keyCode === ESCAPE &&
         (gameState === 'initial' || gameState === 'dead')
     ) {
         start();
+    }
+}
+
+function updateSpeed() {
+    if ((score + failcount) % 3 == 0) {
+        Command.increaseSpeed();
     }
 }
 
