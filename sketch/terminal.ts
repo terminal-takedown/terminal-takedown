@@ -45,7 +45,7 @@ class Terminal {
 
         stroke(this.highlightColor ?? defaultColor);
         noFill();
-        rect(20, windowHeight - this.termHeight, windowWidth - 50, 50, 10);
+        rect(20, windowHeight - this.termHeight, windowWidth - 40, 50, 10);
 
         fill(this.highlightColor ?? defaultColor);
         noStroke();
