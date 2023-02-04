@@ -26,6 +26,8 @@ function windowResized() {
     }
 }
 
+let gameState: 'running' | 'dead' | 'initial' = 'initial';
+
 const commands = [
     'kill --pid {randi}',
     'close port {randi}',
@@ -58,49 +60,86 @@ let failcount = 0;
 function draw() {
     background(20);
 
-    glitch.drawGlitches();
-    terminal.draw();
-    if (command !== null) {
-        command.update();
-        command.draw();
+    if (gameState === 'initial') {
+        fill(200);
+        const messageTop = '[WARN] Your server is under attack!';
+        const messageCommand = "[INFO] type 'ssh server' to start defending";
+        text(
+            messageTop,
+            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowHeight / 2 - 40
+        );
+        text(
+            messageCommand,
+            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowHeight / 2
+        );
+    } else if (gameState === 'running') {
+        glitch.drawGlitches();
 
-        if (command.posY > windowHeight - terminal_height - terminal_spacing) {
-            failcount++;
+        if (command !== null) {
+            command.update();
+            command.draw();
 
-            glitch.addGlitchFrames(10);
-            glitch.addPermanentGlitch();
-            const failedText = terminal.inputText;
+            if (
+                command.posY >
+                windowHeight - terminal_height - terminal_spacing
+            ) {
+                failcount++;
 
-            for (let i = 0; i < failedText.length; i++) {
-                const particle = new CharParticle(
-                    failedText[i],
-                    textWidth(terminal.prompt) + 30 + textWidth('a') * i + 10,
-                    windowHeight - 60
-                );
-                particles.push(particle);
+                glitch.addGlitchFrames(10);
+                glitch.addPermanentGlitch();
+                const failedText = terminal.inputText;
+
+                for (let i = 0; i < failedText.length; i++) {
+                    const particle = new CharParticle(
+                        failedText[i],
+                        textWidth(terminal.prompt) +
+                            30 +
+                            textWidth('a') * i +
+                            10,
+                        windowHeight - 60
+                    );
+                    particles.push(particle);
+                }
+
+                terminal.failedToEnterCommand();
+
+                command = null;
+                queueNewCommand();
             }
-
-            terminal.failedToEnterCommand();
-
-            command = null;
-            queueNewCommand();
         }
+
+        particles.forEach((p) => p.draw());
+        particles.forEach((p) => p.update());
+        particles = particles.filter((p) => p.posY <= windowHeight);
+    } else if (gameState === 'dead') {
+        const message = "type 'reboot' to try again";
+        text(
+            message,
+            windowWidth / 2 - textWidth(message) / 2,
+            windowHeight / 2
+        );
     }
 
-    particles.forEach((p) => p.draw());
-    particles.forEach((p) => p.update());
-    particles = particles.filter((p) => p.posY <= windowHeight);
+    terminal.draw();
 }
 
 function keyTyped() {
     if (key === 'Enter') {
-        console.log(`${terminal.inputText}`, `${command.text}`);
-        if (terminal.inputText === command.text) {
-            terminal.success();
-            command = null;
-            queueNewCommand();
+        if (gameState === 'initial' && terminal.inputText === 'ssh server') {
+            gameState = 'running';
+            terminal.prompt = 'root@server>';
+            terminal.inputText = '';
         } else {
-            terminal.sentWrongCommand();
+            console.log(`${terminal.inputText}`, `${command.text}`);
+            if (terminal.inputText === command.text) {
+                terminal.success();
+                command = null;
+                queueNewCommand();
+            } else {
+                terminal.sentWrongCommand();
+            }
         }
     } else {
         terminal.addKey();
