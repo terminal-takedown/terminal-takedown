@@ -128,9 +128,7 @@ function draw() {
 function keyTyped() {
     if (key === 'Enter') {
         if (gameState === 'initial' && terminal.inputText === 'ssh server') {
-            gameState = 'running';
-            terminal.prompt = 'root@server>';
-            terminal.inputText = '';
+            start();
         } else {
             console.log(`${terminal.inputText}`, `${command.text}`);
             if (terminal.inputText === command.text) {
@@ -144,6 +142,12 @@ function keyTyped() {
     } else {
         terminal.addKey();
     }
+}
+
+function start() {
+    gameState = 'running';
+    terminal.prompt = 'root@server>';
+    terminal.inputText = '';
 }
 
 function keyPressed() {
@@ -164,6 +168,9 @@ function keyPressed() {
     }
     if (keyCode === 171) {
         command.increaseSpeed();
+    }
+    if (keyCode === ESCAPE && gameState === 'initial') {
+        start();
     }
 }
 
