@@ -1,4 +1,8 @@
 const caretCoolDownDefault = 40;
+const defaultColor = 'grey';
+
+const SUCCESS_DELAY = 150;
+const ERROR_DELAY = 150;
 
 class Terminal {
     prompt = 'root@local>';
@@ -6,6 +10,7 @@ class Terminal {
     caretCoolDown = caretCoolDownDefault;
     shake = false;
     termHeight: number;
+    highlightColor: 'lightgreen' | 'red' | null = null;
 
     constructor(height: number) {
         this.termHeight = height;
@@ -26,11 +31,11 @@ class Terminal {
             translate(x_random, y_random);
         }
 
-        stroke(255);
+        stroke(this.highlightColor ?? defaultColor);
         noFill();
         rect(20, windowHeight - this.termHeight, windowWidth - 50, 50, 10);
 
-        fill(200);
+        fill(this.highlightColor ?? defaultColor);
         noStroke();
 
         text(
@@ -52,6 +57,35 @@ class Terminal {
 
     send() {
         this.inputText = '';
+    }
+
+    failedToEnterCommand() {
+        this.toggleShake();
+        this.highlight('red', ERROR_DELAY, () => this.toggleShake());
+    }
+    sentWrongCommand() {
+        this.highlight('red', ERROR_DELAY);
+        setTimeout(() => {
+            terminal.send();
+        }, SUCCESS_DELAY);
+    }
+
+    success() {
+        this.highlight('lightgreen', SUCCESS_DELAY);
+
+        setTimeout(() => {
+            terminal.send();
+        }, SUCCESS_DELAY);
+    }
+
+    highlight(color: 'lightgreen' | 'red', delay?: number, cb?: () => void) {
+        this.highlightColor = color;
+        setTimeout(() => {
+            this.highlightColor = null;
+            if (cb) {
+                cb();
+            }
+        }, delay);
     }
 
     toggleShake() {

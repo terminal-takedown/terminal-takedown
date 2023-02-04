@@ -41,9 +41,9 @@ function draw() {
         command.draw();
 
         if (command.posY > windowHeight - terminal_height - terminal_spacing) {
-            terminal.toggleShake();
+            terminal.failedToEnterCommand();
             command = null;
-            queueNewCommand(() => terminal.toggleShake());
+            queueNewCommand();
         }
     }
 }
@@ -52,10 +52,12 @@ function keyTyped() {
     if (key === 'Enter') {
         console.log(`${terminal.inputText}`, `${command.text}`);
         if (terminal.inputText === command.text) {
+            terminal.success();
             command = null;
             queueNewCommand();
+        } else {
+            terminal.sentWrongCommand();
         }
-        terminal.send();
     } else {
         terminal.addKey();
     }
@@ -65,18 +67,23 @@ function keyPressed() {
     if (keyCode === DOWN_ARROW) {
         terminal.toggleShake();
     }
+    if (keyCode === RIGHT_ARROW) {
+        terminal.success();
+    }
+    if (keyCode === LEFT_ARROW) {
+        terminal.sentWrongCommand();
+        setTimeout(() => {
+            terminal.toggleShake();
+        }, 100);
+    }
     if (keyCode === BACKSPACE) {
         terminal.backspace();
     }
 }
 
-function queueNewCommand(cb?: () => void) {
+function queueNewCommand() {
     setTimeout(() => {
-        command = new Command(getCommand(), random(0, windowWidth), 0.5);
+        command = new Command(getCommand(), random(0, windowWidth), 0.8);
         console.log(command.text);
-
-        if (cb) {
-            cb();
-        }
     }, COMMAND_TIMEOUT);
 }
