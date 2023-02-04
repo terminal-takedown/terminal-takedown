@@ -20,4 +20,10 @@ class Command {
         noStroke();
         text(this.text, this.posX, this.posY);
     }
+
+    resize() {
+        if (this.posX > windowWidth - textWidth(this.text)) {
+            this.posX = windowWidth - textWidth(this.text) - 10;
+        }
+    }
 }

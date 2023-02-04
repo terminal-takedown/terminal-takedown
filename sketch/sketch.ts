@@ -14,6 +14,9 @@ function setup() {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    if (command) {
+        command.resize();
+    }
 }
 
 const commands = [
@@ -83,7 +86,12 @@ function keyPressed() {
 
 function queueNewCommand() {
     setTimeout(() => {
-        command = new Command(getCommand(), random(0, windowWidth), 0.8);
+        const commandText = getCommand();
+        command = new Command(
+            commandText,
+            random(0, windowWidth - textWidth(commandText)),
+            0.5
+        );
         console.log(command.text);
     }, COMMAND_TIMEOUT);
 }
