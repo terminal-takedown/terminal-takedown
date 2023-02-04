@@ -1,3 +1,5 @@
+import { Image } from 'p5';
+
 let command: Command | null = null;
 
 const GAME_ROUNDS = 10;
@@ -14,13 +16,22 @@ let glitch = new Glitch();
 const COMMAND_TIMEOUT = 250;
 
 let particles: CharParticle[] = [];
+let img: Image | null = null;
+
+function preload() {
+    img = loadImage('assets/icon.png');
+}
 
 function setup() {
     textFont('monospace');
     pixelDensity(1);
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
-    terminal.unlockInput();
+    terminal.lockInput();
+    setTimeout(() => {
+        gameState = 'initial';
+        terminal.unlockInput();
+    }, 3000);
 }
 
 function windowResized() {
@@ -30,7 +41,7 @@ function windowResized() {
     }
 }
 
-let gameState: 'running' | 'dead' | 'initial' = 'initial';
+let gameState: 'boot' | 'running' | 'dead' | 'initial' = 'boot';
 
 const commands = [
     'kill --pid {randi}',
@@ -77,7 +88,21 @@ function draw() {
     background(20);
     textSize(32);
 
-    if (gameState === 'initial') {
+    if (gameState === 'boot') {
+        image(
+            img,
+            innerWidth / 2 - 512 / 2,
+            innerHeight / 2 - 512 / 2 - 128,
+            512,
+            512
+        );
+        const name = 'TERMINAL TAKEDOWN';
+        text(
+            name,
+            windowWidth / 2 - textWidth(name) / 2,
+            innerHeight / 2 + 192
+        );
+    } else if (gameState === 'initial') {
         fill(200);
         const messageTop = '[WARN] Your server is under attack!';
         const messageCommand = "[INFO] type 'ssh server' to start defending";
