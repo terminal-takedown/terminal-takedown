@@ -130,8 +130,7 @@ function keyTyped() {
         if (gameState === 'initial' && terminal.inputText === 'ssh server') {
             start();
         } else {
-            console.log(`${terminal.inputText}`, `${command.text}`);
-            if (terminal.inputText === command.text) {
+            if (terminal.inputText === command?.text) {
                 terminal.success();
                 command = null;
                 queueNewCommand();
