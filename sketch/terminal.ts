@@ -12,6 +12,7 @@ class Terminal {
     termHeight: number;
     highlightColor: 'lightgreen' | 'red' | null = null;
     textChangeCallback: (text: string) => void;
+    lock = true;
 
     constructor(height: number, textChangeCallback: (text: string) => void) {
         this.termHeight = height;
@@ -19,13 +20,20 @@ class Terminal {
     }
 
     addKey() {
-        this.inputText += key;
-        this.textChangeCallback(this.inputText);
+        if (this.lock === false) {
+            this.inputText += key;
+            this.textChangeCallback(this.inputText);
+        }
     }
 
     backspace() {
-        this.inputText = this.inputText.substring(0, this.inputText.length - 1);
-        this.textChangeCallback(this.inputText);
+        if (this.lock === false) {
+            this.inputText = this.inputText.substring(
+                0,
+                this.inputText.length - 1
+            );
+            this.textChangeCallback(this.inputText);
+        }
     }
 
     draw() {
@@ -60,8 +68,10 @@ class Terminal {
     }
 
     send() {
-        this.inputText = '';
-        this.textChangeCallback(this.inputText);
+        if (this.lock === false) {
+            this.inputText = '';
+            this.textChangeCallback(this.inputText);
+        }
     }
 
     failedToEnterCommand() {
@@ -69,6 +79,12 @@ class Terminal {
         this.highlight('red', ERROR_DELAY, () => this.toggleShake());
         this.inputText = '';
         this.textChangeCallback(this.inputText);
+    }
+    lockInput() {
+        this.lock = true;
+    }
+    unlockInput() {
+        this.lock = false;
     }
 
     sentWrongCommand() {

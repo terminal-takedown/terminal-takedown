@@ -19,6 +19,7 @@ function setup() {
     textFont('monospace');
     createCanvas(windowWidth, windowHeight);
     queueNewCommand();
+    terminal.unlockInput();
 }
 
 function windowResized() {
@@ -124,7 +125,9 @@ function draw() {
                 command = null;
                 if (failCount >= GAME_ROUNDS) {
                     terminal.inputText = 'exit';
+                    terminal.lockInput();
                     setTimeout(() => {
+                        gameState = 'dead';
                         stopGame();
                     }, 1200);
                 } else {
@@ -208,14 +211,15 @@ function startGame() {
     failCount = 0;
     score = 0;
     Command.restSpeed();
+    terminal.unlockInput();
     queueNewCommand(0);
 }
 
 function stopGame() {
-    gameState = 'dead';
     terminal.prompt = 'root@local>';
     terminal.inputText = '';
     particles = [];
+    terminal.unlockInput();
 }
 
 function keyPressed() {
