@@ -17,16 +17,42 @@ class Command {
         this.posY += windowHeight / (Command.commandSpeed * 500);
     }
 
-    splitText(): [string, string] {
+    findFirstErrorIndex() {
+        let firstErrorIndex = -1;
+
+        for (
+            let i = 0;
+            i < this.text.length && i < this.terminalText.length;
+            i++
+        ) {
+            firstErrorIndex = i;
+            if (this.text[i] !== this.terminalText[i]) {
+                break;
+            }
+        }
+
+        return firstErrorIndex;
+    }
+
+    splitText(): [string, string, string] {
         if (this.terminalText.length === 0) {
-            return ['', this.text];
+            return ['', '', this.text];
         }
 
         if (!this.text.startsWith(this.terminalText)) {
-            return ['', this.text];
+            const firstErrorIndex = this.findFirstErrorIndex();
+            return [
+                this.text.substring(0, firstErrorIndex),
+                this.text.substring(firstErrorIndex, firstErrorIndex + 1),
+                this.text.substring(firstErrorIndex + 1, this.text.length),
+            ];
         }
 
-        return [this.terminalText, this.text.replace(this.terminalText, '')];
+        return [
+            this.terminalText,
+            '',
+            this.text.replace(this.terminalText, ''),
+        ];
     }
 
     public draw() {
@@ -34,12 +60,22 @@ class Command {
         fill(200);
         noStroke();
 
-        const [typedText, untypedText] = this.splitText();
+        const [typedText, errorText, untypedText] = this.splitText();
 
         fill(0, 255, 0);
         text(typedText, this.posX, this.posY);
+        fill(255, 0, 0);
+        text(
+            errorText === ' ' ? '_' : errorText,
+            this.posX + textWidth(typedText),
+            this.posY
+        );
         fill(200);
-        text(untypedText, this.posX + textWidth(typedText), this.posY);
+        text(
+            untypedText,
+            this.posX + textWidth(typedText) + textWidth(errorText),
+            this.posY
+        );
     }
 
     resize() {
