@@ -126,6 +126,9 @@ function draw() {
         textSize(32);
         const messageTop = '[FTL] Your server has been compromised';
         const messageCommand = "[INFO] type 'ssh server' to try again";
+        const messageScore = `[DEBUG] Defended ${score} attack${
+            score === 1 ? '' : 's'
+        }`;
         text(
             messageTop,
             windowWidth / 2 - textWidth(messageCommand) / 2,
@@ -135,6 +138,11 @@ function draw() {
             messageCommand,
             windowWidth / 2 - textWidth(messageCommand) / 2,
             windowHeight / 2
+        );
+        text(
+            messageScore,
+            windowWidth / 2 - textWidth(messageCommand) / 2,
+            windowHeight / 2 + 40
         );
     }
 
