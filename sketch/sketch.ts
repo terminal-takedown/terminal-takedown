@@ -91,6 +91,7 @@ function draw() {
                 glitch.addGlitchFrames(15);
                 glitch.addPermanentGlitch();
                 const failedText = terminal.inputText;
+                textSize(32);
 
                 for (let i = 0; i < failedText.length; i++) {
                     const particle = new CharParticle(
@@ -120,6 +121,7 @@ function draw() {
         }
     } else if (gameState === 'dead') {
         fill(200);
+        textSize(32);
         const messageTop = '[FTL] Your server has been compromised';
         const messageCommand = "[INFO] type 'ssh server' to try again";
         text(
@@ -211,6 +213,7 @@ function keyPressed() {
 
 function queueNewCommand() {
     setTimeout(() => {
+        textSize(32);
         const commandText = getCommand();
         command = new Command(
             commandText,

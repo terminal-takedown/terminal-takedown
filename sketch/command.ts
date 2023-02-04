@@ -1,4 +1,4 @@
-let speed = 1;
+let commandSpeed = 1;
 
 class Command {
     posY = 0;
@@ -13,7 +13,7 @@ class Command {
     }
 
     update() {
-        this.posY += windowHeight / (speed * 500);
+        this.posY += windowHeight / (commandSpeed * 500);
     }
 
     splitText(): [typedText: string, untypedText: string] {
@@ -42,6 +42,7 @@ class Command {
     }
 
     resize() {
+        textSize(32);
         if (this.posX > windowWidth - textWidth(this.text)) {
             this.posX = windowWidth - textWidth(this.text) - 10;
         }
@@ -52,6 +53,6 @@ class Command {
     }
 
     increaseSpeed() {
-        speed -= 0.1;
+        commandSpeed -= 0.1;
     }
 }
