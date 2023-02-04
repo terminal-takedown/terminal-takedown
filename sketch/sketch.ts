@@ -43,8 +43,8 @@ const commands = [
     'download more-ram',
 ];
 
-const goodNames = ['firewall', 'dns'];
-const badNames = ['worm.exe', 'virus.bat', 'wizard'];
+const goodNames = ['firewall', 'dns', 'ip table'];
+const badNames = ['worm.exe', 'virus.bat', 'wizard', 'botnet'];
 
 function getCommand(): string {
     return random(commands)
