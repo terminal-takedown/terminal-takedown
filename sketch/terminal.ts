@@ -95,7 +95,7 @@ class Terminal {
         this.highlight('lightgreen', SUCCESS_DELAY);
 
         setTimeout(() => {
-            terminal.send();
+            this.send();
             if (cb) cb();
         }, SUCCESS_DELAY);
     }
