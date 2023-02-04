@@ -56,10 +56,25 @@ class Glitch {
     drawPermanentGlitches = () => {
         permanentGlitches.forEach((element) => {
             const offset = random(-1, 1);
-            fill(random(colors));
-            translate(offset, offset);
-            rect(element.x, element.y, element.w, element.h);
-            translate(-offset, -offset);
+            fill(element.color);
+
+            let randomStart = 0;
+            const move = Math.random() > 0.92;
+            if (move) {
+                translate(offset, offset);
+                randomStart = random(-5, 5);
+                fill(random(colors));
+            }
+
+            rect(
+                element.x + randomStart,
+                element.y,
+                element.w + randomStart,
+                element.h
+            );
+            if (move) {
+                translate(-offset, -offset);
+            }
         });
     };
 
