@@ -127,10 +127,12 @@ function draw() {
                 if (failCount >= GAME_ROUNDS) {
                     terminal.inputText = 'exit';
                     terminal.lockInput();
+
                     setTimeout(() => {
-                        gameState = 'dead';
-                        stopGame();
-                    }, 1200);
+                        terminal.success(() => {
+                            stopGame();
+                        });
+                    }, 600);
                 } else {
                     queueNewCommand();
                     updateSpeed();
@@ -217,6 +219,7 @@ function startGame() {
 }
 
 function stopGame() {
+    gameState = 'dead';
     terminal.prompt = 'root@local>';
     terminal.inputText = '';
     particles = [];
