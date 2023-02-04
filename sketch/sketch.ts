@@ -31,7 +31,7 @@ let gameState: 'running' | 'dead' | 'initial' = 'initial';
 const commands = [
     'kill --pid {randi}',
     'close port {randi}',
-    'start process --id {randi}',
+    'start --id {randi}',
     'update {goodName}',
     'close connection {randi}',
     'stop download --force',
@@ -45,17 +45,28 @@ const commands = [
     'download more-ram',
 ];
 
-const goodNames = ['firewall', 'dns', 'ip table'];
-const badNames = ['worm.exe', 'virus.bat', 'wizard', 'botnet'];
+const goodNames = ['firewall', 'dns', 'file-watcher', 'tunnel', 'vpn'];
+const badNames = [
+    'worm.exe',
+    'virus.bat',
+    'wizard',
+    'botnet',
+    'miner',
+    'brute-force',
+    'malware',
+];
 
 function getCommand(): string {
     return random(commands)
-        .replaceAll('{randi}', Math.floor(random(0, 999)).toString())
+        .replaceAll(
+            '{randi}',
+            Math.floor(random(0, 10 + (score + failCount) * 5)).toString()
+        )
         .replaceAll('{badName}', random(badNames))
         .replaceAll('{goodName}', random(goodNames));
 }
 
-let failcount = 0;
+let failCount = 0;
 let score = 0;
 
 function draw() {
@@ -87,7 +98,7 @@ function draw() {
                 command.posY >
                 windowHeight - terminal_height - terminal_spacing
             ) {
-                failcount++;
+                failCount++;
 
                 glitch.addGlitchFrames(15);
                 glitch.addPermanentGlitch();
@@ -118,7 +129,7 @@ function draw() {
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
 
-        if (failcount >= 10) {
+        if (failCount >= 10) {
             stop();
         }
     } else if (gameState === 'dead') {
@@ -187,7 +198,7 @@ function start() {
     gameState = 'running';
     terminal.prompt = 'root@server>';
     terminal.inputText = '';
-    failcount = 0;
+    failCount = 0;
     Command.restSpeed();
 }
 
@@ -225,7 +236,7 @@ function keyPressed() {
 }
 
 function updateSpeed() {
-    if ((score + failcount) % 3 == 0) {
+    if ((score + failCount) % 3 == 0) {
         Command.increaseSpeed();
     }
 }

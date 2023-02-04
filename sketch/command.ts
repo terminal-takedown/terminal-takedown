@@ -1,5 +1,7 @@
+const defaultSpeed = 1.5;
+
 class Command {
-    static commandSpeed = 1;
+    static commandSpeed = defaultSpeed;
     posY = 0;
     posX = 0;
     text = '';
@@ -57,6 +59,6 @@ class Command {
     }
 
     static restSpeed() {
-        Command.commandSpeed = 1;
+        Command.commandSpeed = defaultSpeed;
     }
 }
