@@ -38,14 +38,10 @@ class Glitch {
     };
 
     drawGlitchLine = () => {
-        console.log('drawGlitchLine');
-
         const myrand = Math.floor(Math.random() * 7);
         const randomColor = colors[myrand];
-        //console.log(myrand, randomColor);
 
         fill(randomColor);
-
         rect(
             Math.random() * innerWidth,
             Math.random() * innerHeight,
