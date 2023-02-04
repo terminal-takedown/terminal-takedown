@@ -58,9 +58,18 @@ const commands = [
     'block {badName} -g',
     'allow {goodName}',
     'download more-ram',
+    'backup ~',
+    'start {goodName} daemon',
 ];
 
-const goodNames = ['firewall', 'dns', 'file-watcher', 'tunnel', 'vpn'];
+const goodNames = [
+    'firewall',
+    'dns',
+    'file-watcher',
+    'tunnel',
+    'vpn',
+    'driver',
+];
 const badNames = [
     'worm.exe',
     'virus.bat',
@@ -69,6 +78,7 @@ const badNames = [
     'miner',
     'brute-force',
     'malware',
+    'zip-bomb',
 ];
 
 function getCommand(): string {
