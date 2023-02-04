@@ -23,16 +23,27 @@ const commands = [
     'kill --pid {randi}',
     'close port {randi}',
     'start process --id {randi}',
-    'update firewall',
+    'update {goodName}',
     'close connection {randi}',
     'stop download --force',
+    'install {goodName}',
+    'kill {badName} -f',
+    'close {badName}',
+    'start {goodName}',
+    'rm -f {badName}',
+    'block {badName} -g',
+    'allow {goodName}',
+    'download more-ram',
 ];
 
-function getCommand() {
-    return random(commands).replace(
-        '{randi}',
-        Math.floor(random(0, 999)).toString()
-    );
+const goodNames = ['firewall', 'dns'];
+const badNames = ['worm.exe', 'virus.bat', 'wizard'];
+
+function getCommand(): string {
+    return random(commands)
+        .replaceAll('{randi}', Math.floor(random(0, 999)).toString())
+        .replaceAll('{badName}', random(badNames))
+        .replaceAll('{goodName}', random(goodNames));
 }
 
 function draw() {
@@ -63,7 +74,9 @@ function keyTyped() {
         }
     } else {
         terminal.addKey();
-        command.setTerminalText(terminal.inputText);
+        if (command) {
+            command.setTerminalText(terminal.inputText);
+        }
     }
 }
 
@@ -93,7 +106,7 @@ function queueNewCommand() {
         const commandText = getCommand();
         command = new Command(
             commandText,
-            random(0, windowWidth - textWidth(commandText)),
+            Math.floor(random(500, windowWidth - textWidth(commandText) - 100)),
             1,
             terminal.inputText
         );
