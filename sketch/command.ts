@@ -1,19 +1,18 @@
-let commandSpeed = 1;
-
 class Command {
+    static commandSpeed = 1;
     posY = 0;
     posX = 0;
     text = '';
     terminalText = '';
 
-    constructor(text: string, x: number, speed: number, terminalText: string) {
+    constructor(text: string, x: number, terminalText: string) {
         this.posX = x;
         this.text = text;
         this.terminalText = terminalText;
     }
 
     update() {
-        this.posY += windowHeight / (commandSpeed * 500);
+        this.posY += windowHeight / (Command.commandSpeed * 500);
     }
 
     splitText(): [typedText: string, untypedText: string] {
@@ -53,10 +52,10 @@ class Command {
     }
 
     increaseSpeed() {
-        commandSpeed -= 0.1;
+        Command.commandSpeed -= Command.commandSpeed * 0.1;
     }
 
     restSpeed() {
-        commandSpeed = 1;
+        Command.commandSpeed = 1;
     }
 }

@@ -219,7 +219,6 @@ function queueNewCommand() {
         command = new Command(
             commandText,
             Math.floor(random(20, windowWidth - textWidth(commandText) - 100)),
-            1,
             terminal.inputText
         );
         console.log(command.text);
