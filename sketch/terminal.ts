@@ -94,7 +94,6 @@ class Terminal {
     }
 
     toggleShake() {
-        console.log('shake');
         this.shake = !this.shake;
     }
 }
