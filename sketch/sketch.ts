@@ -123,6 +123,16 @@ function draw() {
     }
 
     terminal.draw();
+
+    textSize(20);
+    fill('green');
+    text(
+        Math.round(frameRate()).toString(),
+        innerWidth - 25,
+        innerHeight - 20,
+        50,
+        50
+    );
 }
 
 function keyTyped() {
