@@ -7,6 +7,7 @@ const terminal = new Terminal(terminal_height, (text) => {
         command.setTerminalText(text);
     }
 });
+const glitch = new Glitch();
 
 const COMMAND_TIMEOUT = 250;
 
@@ -50,8 +51,17 @@ function getCommand(): string {
         .replaceAll('{goodName}', random(goodNames));
 }
 
+let failcount = 0;
+
 function draw() {
     background(20);
+
+    if (this.glitchy === true) {
+        glitch.draw();
+        setTimeout(() => {
+            this.glitchy = false;
+        }, 200);
+    }
 
     terminal.draw();
     if (command !== null) {
@@ -59,7 +69,11 @@ function draw() {
         command.draw();
 
         if (command.posY > windowHeight - terminal_height - terminal_spacing) {
+            failcount++;
+            this.glitchy = true;
+
             terminal.failedToEnterCommand();
+
             command = null;
             queueNewCommand();
         }
