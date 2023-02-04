@@ -58,13 +58,7 @@ let failcount = 0;
 function draw() {
     background(20);
 
-    if (this.glitchy === true) {
-        glitch.draw();
-        setTimeout(() => {
-            this.glitchy = false;
-        }, 200);
-    }
-
+    glitch.drawGlitches();
     terminal.draw();
     if (command !== null) {
         command.update();
@@ -72,7 +66,9 @@ function draw() {
 
         if (command.posY > windowHeight - terminal_height - terminal_spacing) {
             failcount++;
-            this.glitchy = true;
+
+            glitch.addGlitchFrames(10);
+            glitch.addPermanentGlitch();
             const failedText = terminal.inputText;
 
             for (let i = 0; i < failedText.length; i++) {

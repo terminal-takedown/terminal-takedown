@@ -7,13 +7,71 @@ const colors = [
     '#d0535e',
     '#3733c9',
 ];
+
+type PermanentGlitch = {
+    color: string;
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+};
+
+const permanentGlitches: PermanentGlitch[] = [];
 let linePos = 0,
     rAF;
 
 class Glitch {
-    draw = () => {
+    glitchFrames = 0;
+    drawGlitches = () => {
         //rAF = window.requestAnimationFrame(this.draw);
+        if (this.glitchFrames > 0) {
+            this.enterGlitchMode();
+            this.glitchFrames -= 1;
+        } else {
+            this.drawPermanentGlitches();
+        }
 
+        //ctx.setTransform(1, 0, 0, .8, .2, 0);
+    };
+
+    addGlitchFrames = (frames: number) => {
+        this.glitchFrames += frames;
+    };
+
+    drawGlitchLine = () => {
+        console.log('drawGlitchLine');
+
+        const myrand = Math.floor(Math.random() * 7);
+        const randomColor = colors[myrand];
+        //console.log(myrand, randomColor);
+
+        fill(randomColor);
+
+        rect(
+            Math.random() * innerWidth,
+            Math.random() * innerHeight,
+            Math.random() * 100,
+            Math.random() * 5
+        );
+    };
+    drawPermanentGlitches = () => {
+        permanentGlitches.forEach((element) => {
+            fill(element.color);
+            rect(element.x, element.y, element.w, element.h);
+        });
+    };
+
+    addPermanentGlitch = () => {
+        permanentGlitches.push({
+            color: colors[Math.floor(Math.random() * 7)],
+            x: Math.random() * innerWidth,
+            y: Math.random() * innerHeight - 80 - 20,
+            w: Math.random() * 100,
+            h: Math.random() * 5,
+        });
+    };
+
+    enterGlitchMode = () => {
         fill('#1a191c');
         rect(0, 0, innerWidth, innerHeight);
 
@@ -36,21 +94,5 @@ class Glitch {
             );
         }
         this.drawGlitchLine();
-        //ctx.setTransform(1, 0, 0, .8, .2, 0);
-    };
-
-    drawGlitchLine = () => {
-        const myrand = Math.floor(Math.random() * 7);
-        const randomColor = colors[myrand];
-        //console.log(myrand, randomColor);
-
-        fill(randomColor);
-
-        rect(
-            Math.random() * innerWidth,
-            Math.random() * innerHeight,
-            Math.random() * 100,
-            Math.random() * 5
-        );
     };
 }
