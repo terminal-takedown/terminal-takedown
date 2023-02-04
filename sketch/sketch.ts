@@ -63,6 +63,7 @@ function keyTyped() {
         }
     } else {
         terminal.addKey();
+        command.setTerminalText(terminal.inputText);
     }
 }
 
@@ -81,6 +82,9 @@ function keyPressed() {
     }
     if (keyCode === BACKSPACE) {
         terminal.backspace();
+        if (command) {
+            command.setTerminalText(terminal.inputText);
+        }
     }
 }
 
@@ -90,7 +94,8 @@ function queueNewCommand() {
         command = new Command(
             commandText,
             random(0, windowWidth - textWidth(commandText)),
-            0.5
+            1,
+            terminal.inputText
         );
         console.log(command.text);
     }, COMMAND_TIMEOUT);
