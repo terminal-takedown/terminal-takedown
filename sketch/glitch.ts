@@ -72,6 +72,15 @@ class Glitch {
                 element.w + randomStart,
                 element.h
             );
+            if (random(0, 1) > 0.95) {
+                fill(20);
+                rect(
+                    element.x + random(-element.w / 2, element.w / 2),
+                    element.y,
+                    random(20, 60),
+                    element.h
+                );
+            }
             if (move) {
                 translate(-offset, -offset);
             }
