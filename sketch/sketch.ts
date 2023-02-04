@@ -199,6 +199,7 @@ function startGame() {
     terminal.prompt = 'root@server>';
     terminal.inputText = '';
     failCount = 0;
+    score = 0;
     Command.restSpeed();
 }
 
