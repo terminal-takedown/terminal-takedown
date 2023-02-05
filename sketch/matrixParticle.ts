@@ -1,9 +1,10 @@
 const katakana =
     '日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
 const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const nums = '0123456789';
+const cyrillic = 'БГДЁЖЗИЙЛПУФЦЧШЩЪЫЭЮЯ';
+const numbers = '0123456789';
 const other = ':・."=*+-<>';
-const alphabet = (katakana + latin + nums).split('');
+const alphabet = (katakana + latin + numbers + cyrillic).split('');
 
 class MatrixParticle {
     static size = 20;
