@@ -1,4 +1,6 @@
 on: push
+permissions:
+  contents: write
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
