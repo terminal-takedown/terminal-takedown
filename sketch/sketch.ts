@@ -108,12 +108,15 @@ function draw() {
     matrixParticles = matrixParticles.filter((p) => p.chars.length < 25);
 
     if (gameState === 'boot') {
+        const factor = 0.5;
+        const y =
+            windowHeight / 2 - (windowHeight * factor) / 2 - windowHeight * 0.1;
         image(
             img,
-            innerWidth / 2 - 512 / 2,
-            innerHeight / 2 - 512 / 2 - 128,
-            512,
-            512
+            windowWidth / 2 - (windowHeight * factor) / 2,
+            y,
+            windowHeight * factor,
+            windowHeight * factor
         );
         const name = 'TERMINAL TAKEDOWN';
         textSize(32);
@@ -121,7 +124,7 @@ function draw() {
         text(
             name,
             windowWidth / 2 - textWidth(name) / 2,
-            innerHeight / 2 + 192
+            y + windowHeight * factor + 64
         );
     } else if (gameState === 'initial') {
         fill(200);
