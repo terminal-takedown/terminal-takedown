@@ -279,7 +279,6 @@ function keyTyped() {
             localStorage.getItem('debug') !== 'true'
         ) {
             localStorage.setItem('debug', 'true');
-            alert('debug active');
             terminal.success(() => {
                 terminal.inputText = '';
             });
