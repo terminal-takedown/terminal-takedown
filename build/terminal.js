@@ -1,11 +1,13 @@
 const caretCoolDownDefault = 40;
 const defaultColor = 'lightgrey';
+const defaultSpecialColor = 'green';
 const SUCCESS_DELAY = 150;
 const ERROR_DELAY = 150;
 const SPECIAL_COMMANDS = {
     'hard mode': 'HARD MODE activated',
     debug: 'DEBUG MODE enabled permanently in this browser',
     exit: 'we need you to defend the system - no running away!',
+    whoami: 'master of the universe, defender of the systems, best ethical hacker in town',
 };
 class Terminal {
     constructor(height, textChangeCallback) {
@@ -15,7 +17,11 @@ class Terminal {
         this.shake = false;
         this.highlightColor = null;
         this.lock = true;
-        this.commandAcceptedFrames = [0, null];
+        this.commandAcceptedFrames = [
+            0,
+            null,
+            defaultSpecialColor,
+        ];
         this.termHeight = height;
         this.textChangeCallback = textChangeCallback;
     }
@@ -37,12 +43,16 @@ class Terminal {
         if (this.shake === true) {
             translate(x_random, y_random);
         }
-        const [frames, specialCommand] = this.commandAcceptedFrames;
+        const [frames, specialCommand, specialColor] = this.commandAcceptedFrames;
         if (frames > 0) {
             textSize(24);
-            fill('green');
+            fill(specialColor);
             text('> ' + specialCommand, 30, windowHeight - 100);
-            this.commandAcceptedFrames = [frames - 1, specialCommand];
+            this.commandAcceptedFrames = [
+                frames - 1,
+                specialCommand,
+                specialColor,
+            ];
         }
         stroke(this.highlightColor ?? defaultColor);
         noFill();
@@ -65,8 +75,10 @@ class Terminal {
         return this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : '';
     }
     send() {
-        if (SPECIAL_COMMANDS[this.inputText] !== undefined) {
-            this.commandAcceptedFrames = [50, SPECIAL_COMMANDS[this.inputText]];
+        const specialText = SPECIAL_COMMANDS[this.inputText];
+        if (specialText !== undefined) {
+            const color = this.inputText === 'exit' ? 'red' : defaultSpecialColor;
+            this.commandAcceptedFrames = [50, specialText, color];
         }
         if (this.lock === false) {
             this.inputText = '';
