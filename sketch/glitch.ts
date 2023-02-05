@@ -110,16 +110,16 @@ class Glitch {
             rect(
                 Math.floor(Math.random() * innerWidth),
                 Math.floor(Math.random() * innerHeight),
-                Math.floor(Math.random() * 10) + 1,
-                Math.floor(Math.random() * 30) + 1
+                Math.floor(Math.random() * 50) + 1,
+                Math.floor(Math.random() * 50) + 1
             );
 
             fill(`rgba(0,0,0,${Math.random() * 0.1})`);
             rect(
                 Math.floor(Math.random() * innerWidth),
                 Math.floor(Math.random() * innerHeight),
-                Math.floor(Math.random() * 25) + 1,
-                Math.floor(Math.random() * 25) + 1
+                Math.floor(Math.random() * 50) + 1,
+                Math.floor(Math.random() * 50) + 1
             );
         }
         this.drawGlitchLine();
