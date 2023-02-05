@@ -17,7 +17,7 @@ class Command {
         this.posY += windowHeight / (Command.commandSpeed * 500);
     }
 
-    findErrorIndices() {
+    findFirstErrorIndex() {
         let firstErrorIndex = -1;
 
         for (
@@ -25,13 +25,13 @@ class Command {
             i < this.text.length && i < this.terminalText.length;
             i++
         ) {
+            firstErrorIndex = i;
             if (this.text[i] !== this.terminalText[i]) {
-                firstErrorIndex = i;
                 break;
             }
         }
 
-        return [firstErrorIndex, this.terminalText.length - 1];
+        return firstErrorIndex;
     }
 
     splitText(): [string, string, string] {
@@ -40,16 +40,24 @@ class Command {
         }
 
         if (!this.text.startsWith(this.terminalText)) {
-            const [firstErrorIndex, lastErrorIndex] = this.findErrorIndices();
+            const firstErrorIndex = this.findFirstErrorIndex();
+
+            const firstRedCharacter =
+                firstErrorIndex === this.text.length - 1
+                    ? firstErrorIndex + 1
+                    : firstErrorIndex;
+            const extraCharAmount =
+                this.terminalText.length -
+                this.text.substring(0, firstRedCharacter).length;
+
             return [
-                this.text.substring(0, firstErrorIndex),
-                this.text.substring(firstErrorIndex, lastErrorIndex + 1),
-                this.text.substring(
-                    this.text.length < lastErrorIndex + 1
-                        ? this.text.length
-                        : lastErrorIndex + 1,
-                    this.text.length
-                ),
+                this.text.substring(0, firstRedCharacter),
+
+                this.text
+                    .substring(firstRedCharacter, this.terminalText.length)
+                    .padEnd(extraCharAmount, '_'),
+
+                this.text.substring(this.terminalText.length, this.text.length),
             ];
         }
 
