@@ -47,7 +47,7 @@ class MatrixParticle {
         noStroke();
         text(this.chars[0], this.posX, this.posY);
         for (let i = 1; i < this.chars.length; i++) {
-            fill(this.rgb[0], this.rgb[1], this.rgb[2], this.opacity);
+            fill(this.rgb[0], this.rgb[1], this.rgb[2], this.opacity - i * 7);
             text(this.chars[i], this.posX, this.posY - MatrixParticle.size * i);
         }
     }
