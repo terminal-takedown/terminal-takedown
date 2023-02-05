@@ -285,7 +285,7 @@ function keyTyped() {
             });
         } else if (
             gameState === 'initial' &&
-            terminal.inputText === 'hard mode'
+            SPECIAL_COMMANDS.hasOwnProperty(terminal.inputText)
         ) {
             Command.commandSpeed = 0.4;
             failCount = 7;

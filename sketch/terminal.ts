@@ -1,5 +1,6 @@
 const caretCoolDownDefault = 40;
 const defaultColor = 'lightgrey';
+const defaultSpecialColor = 'green';
 
 const SUCCESS_DELAY = 150;
 const ERROR_DELAY = 150;
@@ -19,7 +20,11 @@ class Terminal {
     highlightColor: 'lightgreen' | 'red' | null = null;
     textChangeCallback: (text: string) => void;
     lock = true;
-    commandAcceptedFrames: [number, string] = [0, null];
+    commandAcceptedFrames: [number, string, string] = [
+        0,
+        null,
+        defaultSpecialColor,
+    ];
 
     constructor(height: number, textChangeCallback: (text: string) => void) {
         this.termHeight = height;
@@ -50,12 +55,17 @@ class Terminal {
             translate(x_random, y_random);
         }
 
-        const [frames, specialCommand] = this.commandAcceptedFrames;
+        const [frames, specialCommand, specialColor] =
+            this.commandAcceptedFrames;
         if (frames > 0) {
             textSize(24);
-            fill('green');
+            fill(specialColor);
             text('> ' + specialCommand, 30, windowHeight - 100);
-            this.commandAcceptedFrames = [frames - 1, specialCommand];
+            this.commandAcceptedFrames = [
+                frames - 1,
+                specialCommand,
+                specialColor,
+            ];
         }
 
         stroke(this.highlightColor ?? defaultColor);
@@ -87,8 +97,11 @@ class Terminal {
     }
 
     send() {
-        if (SPECIAL_COMMANDS[this.inputText] !== undefined) {
-            this.commandAcceptedFrames = [50, SPECIAL_COMMANDS[this.inputText]];
+        const specialText = SPECIAL_COMMANDS[this.inputText];
+        if (specialText !== undefined) {
+            const color =
+                this.inputText === 'exit' ? 'red' : defaultSpecialColor;
+            this.commandAcceptedFrames = [50, specialText, color];
         }
         if (this.lock === false) {
             this.inputText = '';
