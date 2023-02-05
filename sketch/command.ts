@@ -25,8 +25,8 @@ class Command {
             i < this.text.length && i < this.terminalText.length;
             i++
         ) {
-            firstErrorIndex = i;
             if (this.text[i] !== this.terminalText[i]) {
+                firstErrorIndex = i;
                 break;
             }
         }
@@ -43,8 +43,8 @@ class Command {
             const firstErrorIndex = this.findFirstErrorIndex();
 
             const firstRedCharacter =
-                firstErrorIndex === this.text.length - 1
-                    ? firstErrorIndex + 1
+                firstErrorIndex === -1
+                    ? this.terminalText.length - 1
                     : firstErrorIndex;
             const extraCharAmount =
                 this.terminalText.length -
