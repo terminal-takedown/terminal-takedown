@@ -23,14 +23,11 @@ class Glitch {
     permanentGlitches: PermanentGlitch[] = [];
     glitchFrames = 0;
     drawGlitches = () => {
-        //rAF = window.requestAnimationFrame(this.draw);
         if (this.glitchFrames > 0) {
             this.enterGlitchMode();
             this.glitchFrames -= 1;
         }
         this.drawPermanentGlitches();
-
-        //ctx.setTransform(1, 0, 0, .8, .2, 0);
     };
 
     addGlitchFrames = (frames: number) => {
