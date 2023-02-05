@@ -109,6 +109,11 @@ class Command {
         console.log('new speed', Command.commandSpeed);
     }
 
+    static decreaseSpeed() {
+        Command.commandSpeed += Command.commandSpeed * 0.1;
+        console.log('new speed', Command.commandSpeed);
+    }
+
     static restSpeed() {
         Command.commandSpeed = defaultSpeed;
     }

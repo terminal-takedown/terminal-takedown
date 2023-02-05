@@ -3,6 +3,8 @@ import { Image } from 'p5';
 let command: Command | null = null;
 
 const GAME_ROUNDS = 10;
+const MAX_PITY = 3;
+let currentPity = 0;
 
 const terminal_height = 80;
 const terminal_spacing = 20;
@@ -151,6 +153,11 @@ function draw() {
             ) {
                 failCount++;
 
+                if (currentPity < MAX_PITY && Command.commandSpeed < 1) {
+                    Command.decreaseSpeed();
+                    ++currentPity;
+                }
+
                 glitch.addGlitchFrames(15);
                 glitch.addPermanentGlitch();
                 const failedText = terminal.inputText;
@@ -263,8 +270,8 @@ function keyTyped() {
                 matrixParticles.push(...command.destruct());
                 command = null;
                 queueNewCommand();
-                updateSpeed();
                 ++score;
+                updateSpeed();
             } else {
                 terminal.sentWrongCommand();
             }
@@ -286,6 +293,7 @@ function startGame() {
     gameState = 'running';
     failCount = 0;
     score = 0;
+    currentPity = 0;
     Command.restSpeed();
     terminal.unlockInput();
     queueNewCommand(0);
