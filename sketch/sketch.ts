@@ -3,6 +3,7 @@ import { Image } from 'p5';
 let command: Command | null = null;
 
 const GAME_ROUNDS = 10;
+let customStart = false;
 const MAX_PITY = 3;
 let pityEasy = 0;
 let pityHard = 0;
@@ -259,9 +260,21 @@ function keyTyped() {
         ) {
             localStorage.setItem('debug', 'true');
             alert('debug active');
-            terminal.inputText = '';
-        }
-        if (
+            terminal.success(() => {
+                terminal.inputText = '';
+            });
+        } else if (
+            gameState === 'initial' &&
+            terminal.inputText === 'hard mode'
+        ) {
+            Command.commandSpeed = 0.4;
+            failCount = 7;
+            customStart = true;
+            console.log('hard mode activated');
+            terminal.success(() => {
+                terminal.inputText = '';
+            });
+        } else if (
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
         ) {
@@ -295,13 +308,16 @@ function startPreRun() {
 
 function startGame() {
     gameState = 'running';
-    failCount = 0;
+    if (customStart === false) {
+        failCount = 0;
+        Command.restSpeed();
+    }
     score = 0;
     pityEasy = 0;
     pityHard = 0;
-    Command.restSpeed();
     terminal.unlockInput();
     queueNewCommand(0);
+    customStart = false;
 }
 
 function stopGame() {
