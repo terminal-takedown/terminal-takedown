@@ -2,6 +2,10 @@ const caretCoolDownDefault = 40;
 const defaultColor = 'lightgrey';
 const SUCCESS_DELAY = 150;
 const ERROR_DELAY = 150;
+const SPECIAL_COMMANDS = {
+    'hard mode': 'HARD MODE activated',
+    debug: 'DEBUG MODE enabled permanently in this browser',
+};
 class Terminal {
     constructor(height, textChangeCallback) {
         this.prompt = 'root@local>';
@@ -10,6 +14,7 @@ class Terminal {
         this.shake = false;
         this.highlightColor = null;
         this.lock = true;
+        this.commandAcceptedFrames = [0, null];
         this.termHeight = height;
         this.textChangeCallback = textChangeCallback;
     }
@@ -30,6 +35,13 @@ class Terminal {
         const y_random = random(-5, 5);
         if (this.shake === true) {
             translate(x_random, y_random);
+        }
+        const [frames, specialCommand] = this.commandAcceptedFrames;
+        if (frames > 0) {
+            textSize(24);
+            fill('green');
+            text('> ' + specialCommand, 30, windowHeight - 100);
+            this.commandAcceptedFrames = [frames - 1, specialCommand];
         }
         stroke(this.highlightColor ?? defaultColor);
         noFill();
@@ -52,6 +64,9 @@ class Terminal {
         return this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : '';
     }
     send() {
+        if (SPECIAL_COMMANDS[this.inputText] !== undefined) {
+            this.commandAcceptedFrames = [50, SPECIAL_COMMANDS[this.inputText]];
+        }
         if (this.lock === false) {
             this.inputText = '';
             this.textChangeCallback(this.inputText);
