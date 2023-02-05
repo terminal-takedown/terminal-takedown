@@ -123,13 +123,9 @@ function draw() {
             windowWidth / 2 - textWidth(name) / 2,
             innerHeight / 2 + 192
         );
-    } else if (gameState === 'prerun') {
-        glitch.drawGlitches();
-        if (glitch.glitchFrames === 0) {
-            startGame();
-        }
     } else if (gameState === 'initial') {
         fill(200);
+        textSize(32);
         const messageTop = '[WARN] Your server is under attack!';
         const messageCommand = "[INFO] type 'ssh server' to start defending";
         text(
@@ -142,6 +138,21 @@ function draw() {
             windowWidth / 2 - textWidth(messageCommand) / 2,
             windowHeight / 2
         );
+
+        if (random() > 0.97) {
+            matrixParticles.push(
+                new MatrixParticle(
+                    random(20, windowWidth - 20),
+                    random(0, windowHeight - 300),
+                    [0, 255, 0]
+                )
+            );
+        }
+    } else if (gameState === 'prerun') {
+        glitch.drawGlitches();
+        if (glitch.glitchFrames === 0) {
+            startGame();
+        }
     } else if (gameState === 'running') {
         glitch.drawGlitches();
 
@@ -235,6 +246,15 @@ function draw() {
             windowWidth / 2 - textWidth(messageTop) / 2,
             windowHeight / 2 + 40
         );
+        if (random() > 0.97) {
+            matrixParticles.push(
+                new MatrixParticle(
+                    random(20, windowWidth - 20),
+                    random(0, windowHeight - 300),
+                    [255, 0, 0]
+                )
+            );
+        }
     }
 
     terminal.draw();
@@ -318,6 +338,7 @@ function startGame() {
     terminal.unlockInput();
     queueNewCommand(0);
     customStart = false;
+    matrixParticles = [];
 }
 
 function stopGame() {
