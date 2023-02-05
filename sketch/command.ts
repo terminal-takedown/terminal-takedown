@@ -78,6 +78,21 @@ class Command {
         );
     }
 
+    destruct(): MatrixParticle[] {
+        console.log('destruct');
+        textSize(32);
+        const particles: MatrixParticle[] = [];
+        for (
+            let i = 0;
+            i < textWidth(this.text);
+            i += MatrixParticle.size + 5
+        ) {
+            console.log('push');
+            particles.push(new MatrixParticle(this.posX + i, this.posY));
+        }
+        return particles;
+    }
+
     resize() {
         textSize(32);
         if (this.posX > windowWidth - textWidth(this.text)) {

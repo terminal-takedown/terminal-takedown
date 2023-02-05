@@ -16,6 +16,7 @@ let glitch = new Glitch();
 const COMMAND_TIMEOUT = 250;
 
 let particles: CharParticle[] = [];
+let matrixParticles: MatrixParticle[] = [];
 let img: Image | null = null;
 
 function preload() {
@@ -98,6 +99,10 @@ function draw() {
     background(20);
     textSize(32);
 
+    matrixParticles.forEach((p) => p.draw());
+    matrixParticles.forEach((p) => p.update());
+    matrixParticles = matrixParticles.filter((p) => p.chars.length < 25);
+
     if (gameState === 'boot') {
         image(
             img,
@@ -107,6 +112,8 @@ function draw() {
             512
         );
         const name = 'TERMINAL TAKEDOWN';
+        textSize(32);
+        fill('green');
         text(
             name,
             windowWidth / 2 - textWidth(name) / 2,
@@ -243,6 +250,7 @@ function keyTyped() {
         } else {
             if (terminal.inputText === command?.text) {
                 terminal.success();
+                matrixParticles.push(...command.destruct());
                 command = null;
                 queueNewCommand();
                 updateSpeed();
