@@ -41,7 +41,7 @@ function windowResized() {
     }
 }
 
-let gameState: 'boot' | 'running' | 'dead' | 'initial' = 'boot';
+let gameState: 'boot' | 'prerun' | 'running' | 'dead' | 'initial' = 'boot';
 
 const commands = [
     'kill --pid {randi}',
@@ -112,6 +112,11 @@ function draw() {
             windowWidth / 2 - textWidth(name) / 2,
             innerHeight / 2 + 192
         );
+    } else if (gameState === 'prerun') {
+        glitch.drawGlitches();
+        if (glitch.glitchFrames === 0) {
+            startGame();
+        }
     } else if (gameState === 'initial') {
         fill(200);
         const messageTop = '[WARN] Your server is under attack!';
@@ -233,7 +238,7 @@ function keyTyped() {
             terminal.inputText === 'ssh server'
         ) {
             terminal.success(() => {
-                startGame();
+                startPreRun();
             });
         } else {
             if (terminal.inputText === command?.text) {
@@ -251,8 +256,13 @@ function keyTyped() {
     }
 }
 
-function startGame() {
+function startPreRun() {
     glitch = new Glitch();
+    glitch.addGlitchFrames(15);
+    gameState = 'prerun';
+}
+
+function startGame() {
     gameState = 'running';
     terminal.prompt = 'root@server>';
     terminal.inputText = '';
@@ -299,7 +309,7 @@ function keyPressed() {
         keyCode === ESCAPE &&
         (gameState === 'initial' || gameState === 'dead')
     ) {
-        startGame();
+        startPreRun();
     }
 }
 
