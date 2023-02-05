@@ -5,18 +5,21 @@ class Command {
         this.posX = 0;
         this.text = '';
         this.terminalText = '';
+        this.stopMoving = false;
         this.posX = x;
         this.text = text;
         this.terminalText = terminalText;
     }
     update() {
-        this.posY += windowHeight / (Command.commandSpeed * 500);
+        if (this.stopMoving === false) {
+            this.posY += windowHeight / (Command.commandSpeed * 500);
+        }
     }
     findFirstErrorIndex() {
         let firstErrorIndex = -1;
         for (let i = 0; i < this.text.length && i < this.terminalText.length; i++) {
-            firstErrorIndex = i;
             if (this.text[i] !== this.terminalText[i]) {
+                firstErrorIndex = i;
                 break;
             }
         }
@@ -28,8 +31,8 @@ class Command {
         }
         if (!this.text.startsWith(this.terminalText)) {
             const firstErrorIndex = this.findFirstErrorIndex();
-            const firstRedCharacter = firstErrorIndex === this.text.length - 1
-                ? firstErrorIndex + 1
+            const firstRedCharacter = firstErrorIndex === -1
+                ? this.terminalText.length - 1
                 : firstErrorIndex;
             const extraCharAmount = this.terminalText.length -
                 this.text.substring(0, firstRedCharacter).length;
@@ -88,6 +91,9 @@ class Command {
     }
     static restSpeed() {
         Command.commandSpeed = defaultSpeed;
+    }
+    toggleMoving() {
+        this.stopMoving = !this.stopMoving;
     }
 }
 Command.commandSpeed = defaultSpeed;
