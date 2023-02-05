@@ -24,5 +24,3 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: build
-        repository-name: terminal-takedown/terminal-takedown.github.io
-        token: ${{ secrets.GITHUB_TOKEN }}
