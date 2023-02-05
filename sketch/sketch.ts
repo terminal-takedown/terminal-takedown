@@ -175,6 +175,16 @@ function draw() {
                     terminal.inputText = 'exit';
                     terminal.lockInput();
 
+                    for (
+                        let i = 0;
+                        i < windowWidth;
+                        i += MatrixParticle.size + 5
+                    ) {
+                        matrixParticles.push(
+                            new MatrixParticle(i, 20, [255, 0, 0])
+                        );
+                    }
+
                     setTimeout(() => {
                         terminal.success(() => {
                             stopGame();

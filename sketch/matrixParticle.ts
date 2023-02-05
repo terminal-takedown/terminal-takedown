@@ -13,12 +13,14 @@ class MatrixParticle {
     updateCount = 0;
     opacity = 255;
     speed = 5;
+    rgb = [0, 255, 0];
 
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, rgb: [number, number, number]) {
         this.posX = x;
         this.posY = y + random(-20, 20);
         this.chars.push(random(alphabet));
         this.speed = Math.floor(random(3, 7));
+        this.rgb = rgb;
     }
 
     update() {
@@ -44,7 +46,7 @@ class MatrixParticle {
         noStroke();
         text(this.chars[0], this.posX, this.posY);
         for (let i = 1; i < this.chars.length; i++) {
-            fill(0, 200 - i * 10, 0, this.opacity);
+            fill(this.rgb[0], this.rgb[1], this.rgb[2], this.opacity);
             text(this.chars[i], this.posX, this.posY - MatrixParticle.size * i);
         }
     }

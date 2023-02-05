@@ -79,7 +79,6 @@ class Command {
     }
 
     destruct(): MatrixParticle[] {
-        console.log('destruct');
         textSize(32);
         const particles: MatrixParticle[] = [];
         for (
@@ -87,8 +86,9 @@ class Command {
             i < textWidth(this.text);
             i += MatrixParticle.size + 5
         ) {
-            console.log('push');
-            particles.push(new MatrixParticle(this.posX + i, this.posY));
+            particles.push(
+                new MatrixParticle(this.posX + i, this.posY, [0, 255, 0])
+            );
         }
         return particles;
     }
