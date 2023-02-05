@@ -4,7 +4,8 @@ let command: Command | null = null;
 
 const GAME_ROUNDS = 10;
 const MAX_PITY = 3;
-let currentPity = 0;
+let pityEasy = 0;
+let pityHard = 0;
 
 const terminal_height = 80;
 const terminal_spacing = 20;
@@ -153,9 +154,12 @@ function draw() {
             ) {
                 failCount++;
 
-                if (currentPity < MAX_PITY && Command.commandSpeed < 1) {
+                if (pityEasy < MAX_PITY && Command.commandSpeed < 1) {
                     Command.decreaseSpeed();
-                    ++currentPity;
+                    ++pityEasy;
+                } else if (pityHard < MAX_PITY && Command.commandSpeed < 0.5) {
+                    Command.decreaseSpeed();
+                    ++pityHard;
                 }
 
                 glitch.addGlitchFrames(15);
@@ -293,7 +297,8 @@ function startGame() {
     gameState = 'running';
     failCount = 0;
     score = 0;
-    currentPity = 0;
+    pityEasy = 0;
+    pityHard = 0;
     Command.restSpeed();
     terminal.unlockInput();
     queueNewCommand(0);
