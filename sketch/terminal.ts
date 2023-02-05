@@ -51,9 +51,7 @@ class Terminal {
         noStroke();
 
         text(
-            `${this.prompt}${this.inputText}${
-                this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : ''
-            }`,
+            `${this.prompt}${this.inputText}${this.addCaret()}`,
             30,
             windowHeight - 45
         );
@@ -65,6 +63,11 @@ class Terminal {
         if (this.shake === true) {
             translate(-x_random, -y_random);
         }
+    }
+
+    private addCaret() {
+        if (this.lock === true) return '';
+        return this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : '';
     }
 
     send() {
