@@ -17,7 +17,7 @@ class Command {
         this.posY += windowHeight / (Command.commandSpeed * 500);
     }
 
-    findFirstErrorIndex() {
+    findErrorIndices() {
         let firstErrorIndex = -1;
 
         for (
@@ -25,13 +25,13 @@ class Command {
             i < this.text.length && i < this.terminalText.length;
             i++
         ) {
-            firstErrorIndex = i;
             if (this.text[i] !== this.terminalText[i]) {
+                firstErrorIndex = i;
                 break;
             }
         }
 
-        return firstErrorIndex;
+        return [firstErrorIndex, this.terminalText.length - 1];
     }
 
     splitText(): [string, string, string] {
@@ -40,11 +40,16 @@ class Command {
         }
 
         if (!this.text.startsWith(this.terminalText)) {
-            const firstErrorIndex = this.findFirstErrorIndex();
+            const [firstErrorIndex, lastErrorIndex] = this.findErrorIndices();
             return [
                 this.text.substring(0, firstErrorIndex),
-                this.text.substring(firstErrorIndex, firstErrorIndex + 1),
-                this.text.substring(firstErrorIndex + 1, this.text.length),
+                this.text.substring(firstErrorIndex, lastErrorIndex + 1),
+                this.text.substring(
+                    this.text.length < lastErrorIndex + 1
+                        ? this.text.length
+                        : lastErrorIndex + 1,
+                    this.text.length
+                ),
             ];
         }
 
@@ -66,7 +71,10 @@ class Command {
         text(typedText, this.posX, this.posY);
         fill(255, 0, 0);
         text(
-            errorText === ' ' ? '_' : errorText,
+            Array.from(errorText)
+                .map((c) => (c === ' ' ? '_' : c))
+                .join(''),
+
             this.posX + textWidth(typedText),
             this.posY
         );
