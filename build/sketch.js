@@ -163,12 +163,13 @@ function draw() {
         particles = particles.filter((p) => p.posY <= windowHeight);
     }
     else if (gameState === 'dead') {
-        fill(200);
         textSize(32);
         const messageTop = '[FATAL] Your server has been compromised';
         const messageCommand = "[INFO] Type 'ssh server' to try again";
         const messageScore = `[DEBUG] Defended ${score} attack${score === 1 ? '' : 's'}`;
+        fill(255, 0, 0);
         text(messageTop, windowWidth / 2 - textWidth(messageTop) / 2, windowHeight / 2 - 40);
+        fill(200);
         text(messageCommand, windowWidth / 2 - textWidth(messageTop) / 2, windowHeight / 2);
         text(messageScore, windowWidth / 2 - textWidth(messageTop) / 2, windowHeight / 2 + 40);
         if (random() > 0.97) {
