@@ -257,6 +257,8 @@ function keyTyped() {
 }
 
 function startPreRun() {
+    terminal.prompt = 'root@server>';
+    terminal.inputText = '';
     glitch = new Glitch();
     glitch.addGlitchFrames(15);
     gameState = 'prerun';
@@ -264,8 +266,6 @@ function startPreRun() {
 
 function startGame() {
     gameState = 'running';
-    terminal.prompt = 'root@server>';
-    terminal.inputText = '';
     failCount = 0;
     score = 0;
     Command.restSpeed();
