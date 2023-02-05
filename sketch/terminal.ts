@@ -7,6 +7,7 @@ const ERROR_DELAY = 150;
 const SPECIAL_COMMANDS: { [key: string]: string } = {
     'hard mode': 'HARD MODE activated',
     debug: 'DEBUG MODE enabled permanently in this browser',
+    exit: 'we need you to defend the system - no running away!',
 };
 
 class Terminal {
