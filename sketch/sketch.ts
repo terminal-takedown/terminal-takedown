@@ -127,7 +127,7 @@ function draw() {
         fill(200);
         textSize(32);
         const messageTop = '[WARN] Your server is under attack!';
-        const messageCommand = "[INFO] type 'ssh server' to start defending";
+        const messageCommand = "[INFO] Type 'ssh server' to start defending";
         text(
             messageTop,
             windowWidth / 2 - textWidth(messageCommand) / 2,
@@ -227,7 +227,7 @@ function draw() {
         fill(200);
         textSize(32);
         const messageTop = '[FATAL] Your server has been compromised';
-        const messageCommand = "[INFO] type 'ssh server' to try again";
+        const messageCommand = "[INFO] Type 'ssh server' to try again";
         const messageScore = `[DEBUG] Defended ${score} attack${
             score === 1 ? '' : 's'
         }`;
