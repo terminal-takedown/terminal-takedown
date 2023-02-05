@@ -6,6 +6,7 @@ class Command {
     posX = 0;
     text = '';
     terminalText = '';
+    stopMoving = false;
 
     constructor(text: string, x: number, terminalText: string) {
         this.posX = x;
@@ -14,7 +15,9 @@ class Command {
     }
 
     update() {
-        this.posY += windowHeight / (Command.commandSpeed * 500);
+        if (this.stopMoving === false) {
+            this.posY += windowHeight / (Command.commandSpeed * 500);
+        }
     }
 
     findFirstErrorIndex() {
@@ -132,5 +135,8 @@ class Command {
 
     static restSpeed() {
         Command.commandSpeed = defaultSpeed;
+    }
+    toggleMoving() {
+        this.stopMoving = !this.stopMoving;
     }
 }

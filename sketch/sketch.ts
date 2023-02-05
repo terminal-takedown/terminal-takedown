@@ -358,6 +358,9 @@ function keyPressed() {
     if (localStorage.getItem('debug') !== 'true') {
         return;
     }
+    if (keyCode === UP_ARROW) {
+        command.toggleMoving();
+    }
     if (keyCode === DOWN_ARROW) {
         terminal.toggleShake();
     }
