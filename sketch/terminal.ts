@@ -1,5 +1,5 @@
 const caretCoolDownDefault = 40;
-const defaultColor = 'grey';
+const defaultColor = 'lightgrey';
 
 const SUCCESS_DELAY = 150;
 const ERROR_DELAY = 150;

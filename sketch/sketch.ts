@@ -89,7 +89,7 @@ function getCommand(): string {
     return random(commands)
         .replaceAll(
             '{randi}',
-            Math.floor(random(0, 10 + (score + failCount) * 5)).toString()
+            Math.floor(random(1, 10 + (score + failCount) * 5)).toString()
         )
         .replaceAll('{badName}', random(badNames))
         .replaceAll('{goodName}', random(goodNames));
