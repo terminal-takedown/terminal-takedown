@@ -143,7 +143,7 @@ function draw() {
                 terminal.failedToEnterCommand();
                 command = null;
                 if (failCount >= GAME_ROUNDS) {
-                    terminal.inputText = 'exit';
+                    terminal.inputText = MatrixParticle.getRandomString(random(4, 10));
                     terminal.lockInput();
                     for (let i = 0; i < windowWidth; i += MatrixParticle.size + 5) {
                         matrixParticles.push(new MatrixParticle(i, 20, [255, 0, 0]));
@@ -187,22 +187,9 @@ function draw() {
 }
 function keyTyped() {
     if (key === 'Enter') {
-        if (terminal.inputText === 'debug' &&
-            localStorage.getItem('debug') !== 'true') {
-            localStorage.setItem('debug', 'true');
-            terminal.success(() => {
-                terminal.inputText = '';
-            });
-        }
-        else if (gameState === 'initial' &&
+        if ((gameState === 'initial' || gameState === 'dead') &&
             SPECIAL_COMMANDS.hasOwnProperty(terminal.inputText)) {
-            Command.commandSpeed = 0.4;
-            failCount = 7;
-            customStart = true;
-            console.log('hard mode activated');
-            terminal.success(() => {
-                terminal.inputText = '';
-            });
+            handleSpecialCommand();
         }
         else if ((gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server') {
@@ -298,4 +285,34 @@ function queueNewCommand(specialTimeout = undefined) {
         command = new Command(commandText, Math.floor(random(20, windowWidth - textWidth(commandText) - 100)), terminal.inputText);
         console.log(command.text);
     }, specialTimeout !== undefined ? specialTimeout : COMMAND_TIMEOUT);
+}
+function handleSpecialCommand() {
+    const text = terminal.inputText;
+    switch (text) {
+        case COMMAND_LIST.HARD_MODE:
+            Command.commandSpeed = 0.4;
+            failCount = 7;
+            customStart = true;
+            console.log('hard mode activated');
+            break;
+        case COMMAND_LIST.EXIT:
+        case COMMAND_LIST.WHOAMI:
+            break;
+        case COMMAND_LIST.DEBUG:
+            if (terminal.inputText === 'debug' &&
+                localStorage.getItem('debug') !== 'true') {
+                localStorage.setItem('debug', 'true');
+                terminal.success(() => {
+                    terminal.inputText = '';
+                });
+            }
+            break;
+        default:
+            console.log(`no custom rule for ${this.inputText} registered !?`);
+            terminal.inputText = '';
+            return;
+    }
+    terminal.sendSpecialCommand(() => {
+        terminal.inputText = '';
+    });
 }

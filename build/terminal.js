@@ -3,12 +3,6 @@ const defaultColor = 'lightgrey';
 const defaultSpecialColor = 'green';
 const SUCCESS_DELAY = 150;
 const ERROR_DELAY = 150;
-const SPECIAL_COMMANDS = {
-    'hard mode': 'HARD MODE activated',
-    debug: 'DEBUG MODE enabled permanently in this browser',
-    exit: 'we need you to defend the system - no running away!',
-    whoami: 'master of the universe, defender of the systems, best ethical hacker in town',
-};
 class Terminal {
     constructor(height, textChangeCallback) {
         this.prompt = 'root@local>';
@@ -75,11 +69,6 @@ class Terminal {
         return this.caretCoolDown < caretCoolDownDefault / 2 ? '_' : '';
     }
     send() {
-        const specialText = SPECIAL_COMMANDS[this.inputText];
-        if (specialText !== undefined) {
-            const color = this.inputText === 'exit' ? 'red' : defaultSpecialColor;
-            this.commandAcceptedFrames = [50, specialText, color];
-        }
         if (this.lock === false) {
             this.inputText = '';
             this.textChangeCallback(this.inputText);
@@ -104,6 +93,18 @@ class Terminal {
         this.highlight('lightgreen', SUCCESS_DELAY);
         setTimeout(() => {
             this.send();
+            if (cb)
+                cb();
+        }, SUCCESS_DELAY);
+    }
+    sendSpecialCommand(cb) {
+        this.highlight('lightgreen', SUCCESS_DELAY);
+        setTimeout(() => {
+            const specialText = SPECIAL_COMMANDS[this.inputText];
+            if (specialText !== undefined) {
+                const color = this.inputText === 'exit' ? 'red' : defaultSpecialColor;
+                this.commandAcceptedFrames = [50, specialText, color];
+            }
             if (cb)
                 cb();
         }, SUCCESS_DELAY);
