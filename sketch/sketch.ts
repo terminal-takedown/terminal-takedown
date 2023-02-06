@@ -234,6 +234,7 @@ function draw() {
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
     } else if (gameState === 'dead') {
+        addRandomHintMaybe();
         textSize(32);
         const messageTop = '[FATAL] Your server has been compromised';
         const messageCommand = "[INFO] Type 'ssh server' to try again";
