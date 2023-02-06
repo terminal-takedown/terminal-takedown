@@ -170,6 +170,7 @@ function draw() {
         particles = particles.filter((p) => p.posY <= windowHeight);
     }
     else if (gameState === 'dead') {
+        addRandomHintMaybe();
         textSize(32);
         const messageTop = '[FATAL] Your server has been compromised';
         const messageCommand = "[INFO] Type 'ssh server' to try again";
@@ -315,7 +316,9 @@ function handleSpecialCommand() {
     });
 }
 function addRandomHintMaybe() {
-    if (commandHinter.frames === 0 && random() > 0.9975) {
+    if (commandHinter.frames === 0 &&
+        random() > 0.9975 &&
+        terminal.inputText.length === 0) {
         commandHinter.newHint(150);
     }
     commandHinter.draw();
