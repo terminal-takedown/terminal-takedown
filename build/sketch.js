@@ -4,6 +4,7 @@ let customStart = false;
 const MAX_PITY = 3;
 let pityEasy = 0;
 let pityHard = 0;
+let rainActive = false;
 const terminal_height = 80;
 const terminal_spacing = 20;
 const terminal = new Terminal(terminal_height, (text) => {
@@ -101,7 +102,12 @@ function draw() {
         text(name, windowWidth / 2 - textWidth(name) / 2, y + windowHeight * factor + 64);
     }
     else if (gameState === 'initial') {
-        addRandomHintMaybe();
+        if (rainActive === true) {
+            addMoreRain();
+        }
+        else {
+            addRandomHintMaybe();
+        }
         fill(200);
         textSize(32);
         const messageTop = '[WARN] Your server is under attack!';
@@ -170,7 +176,12 @@ function draw() {
         particles = particles.filter((p) => p.posY <= windowHeight);
     }
     else if (gameState === 'dead') {
-        addRandomHintMaybe();
+        if (rainActive === true) {
+            addMoreRain();
+        }
+        else {
+            addRandomHintMaybe();
+        }
         textSize(32);
         const messageTop = '[FATAL] Your server has been compromised';
         const messageCommand = "[INFO] Type 'ssh server' to try again";
@@ -310,6 +321,9 @@ function handleSpecialCommand() {
                 });
             }
             break;
+        case COMMAND_LIST.LET_IT_RAIN:
+            letItRain();
+            break;
     }
     terminal.sendSpecialCommand(() => {
         terminal.inputText = '';
@@ -322,4 +336,22 @@ function addRandomHintMaybe() {
         commandHinter.newHint(150);
     }
     commandHinter.draw();
+}
+function letItRain() {
+    terminal.lockInput();
+    rainActive = true;
+    setTimeout(() => {
+        rainActive = false;
+        terminal.unlockInput();
+    }, 7500);
+}
+function addMoreRain() {
+    if (frameCount > 25) {
+        const rnd = random();
+        matrixParticles.push(new MatrixParticle(random(20, windowWidth - 20), random(0, windowHeight - 300), rnd < 0.33
+            ? [255, 0, 0]
+            : rnd < 0.66
+                ? [0, 0, 255]
+                : [0, 255, 0]));
+    }
 }

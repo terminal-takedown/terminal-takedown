@@ -6,6 +6,7 @@ var COMMAND_LIST;
     COMMAND_LIST["WHOAMI"] = "whoami";
     COMMAND_LIST["SHUTDOWN"] = "shutdown";
     COMMAND_LIST["REBOOT"] = "reboot";
+    COMMAND_LIST["LET_IT_RAIN"] = "let it rain";
 })(COMMAND_LIST || (COMMAND_LIST = {}));
 const SPECIAL_COMMANDS = {
     [COMMAND_LIST.HARD_MODE]: [50, 'HARD MODE activated', 'green'],
@@ -30,4 +31,9 @@ const SPECIAL_COMMANDS = {
         'red',
     ],
     [COMMAND_LIST.REBOOT]: [100, 'REBOOT failed - fulfill your duty', 'red'],
+    [COMMAND_LIST.LET_IT_RAIN]: [
+        120,
+        'you want some rain, here we go',
+        'green',
+    ],
 };
