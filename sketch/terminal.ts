@@ -14,7 +14,7 @@ class Terminal {
     highlightColor: 'lightgreen' | 'red' | null = null;
     textChangeCallback: (text: string) => void;
     lock = true;
-    commandAcceptedFrames: [number, string, string] = [
+    specialCommandData: [number, string, string] = [
         0,
         null,
         defaultSpecialColor,
@@ -49,13 +49,12 @@ class Terminal {
             translate(x_random, y_random);
         }
 
-        const [frames, specialCommand, specialColor] =
-            this.commandAcceptedFrames;
+        const [frames, specialCommand, specialColor] = this.specialCommandData;
         if (frames > 0) {
             textSize(24);
             fill(specialColor);
             text('> ' + specialCommand, 30, windowHeight - 100);
-            this.commandAcceptedFrames = [
+            this.specialCommandData = [
                 frames - 1,
                 specialCommand,
                 specialColor,
@@ -127,11 +126,13 @@ class Terminal {
         this.highlight('lightgreen', SUCCESS_DELAY);
 
         setTimeout(() => {
-            const specialText = SPECIAL_COMMANDS[this.inputText];
-            if (specialText !== undefined) {
-                const color =
-                    this.inputText === 'exit' ? 'red' : defaultSpecialColor;
-                this.commandAcceptedFrames = [50, specialText, color];
+            const scomData = SPECIAL_COMMANDS[this.inputText];
+            if (scomData !== undefined) {
+                this.specialCommandData = [
+                    scomData[0],
+                    scomData[1],
+                    scomData[2],
+                ];
             }
 
             if (cb) cb();

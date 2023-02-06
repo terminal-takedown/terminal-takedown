@@ -6,13 +6,30 @@ enum COMMAND_LIST {
     SHUTDOWN = 'shutdown',
     REBOOT = 'reboot',
 }
-
-const SPECIAL_COMMANDS: { [key: string]: string } = {
-    [COMMAND_LIST.HARD_MODE]: 'HARD MODE activated',
-    [COMMAND_LIST.DEBUG]: 'DEBUG MODE enabled permanently in this browser',
-    [COMMAND_LIST.EXIT]: 'we need you to defend the system - no running away!',
-    [COMMAND_LIST.WHOAMI]:
+// type SpecialCommand -- frames,text,color
+type SpecialCommand = [number, string, string];
+const SPECIAL_COMMANDS: { [key: string]: SpecialCommand } = {
+    [COMMAND_LIST.HARD_MODE]: [50, 'HARD MODE activated', 'green'],
+    [COMMAND_LIST.DEBUG]: [
+        75,
+        'DEBUG MODE enabled permanently in this browser',
+        'green',
+    ],
+    [COMMAND_LIST.EXIT]: [
+        120,
+        'we need you to defend the system - no running away!',
+        'red',
+    ],
+    [COMMAND_LIST.WHOAMI]: [
+        150,
         'master of the universe, defender of the systems, best ethical hacker in town',
-    [COMMAND_LIST.SHUTDOWN]: 'SHUTDOWN aborted - got a job to do!',
-    [COMMAND_LIST.REBOOT]: 'REBOOT failed - fulfill your duty',
+        'green',
+    ],
+    [COMMAND_LIST.SHUTDOWN]: [
+        100,
+        'SHUTDOWN aborted - got a job to do!',
+        'red',
+    ],
+
+    [COMMAND_LIST.REBOOT]: [100, 'REBOOT failed - fulfill your duty', 'red'],
 };
