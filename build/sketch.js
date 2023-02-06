@@ -54,6 +54,9 @@ const commands = [
     'download more-ram',
     'backup ~',
     'start {goodName} daemon',
+    'unset proxy',
+    'bypass proxy',
+    'connect to surflan',
 ];
 const goodNames = [
     'firewall',
@@ -72,7 +75,6 @@ const badNames = [
     'brute-force',
     'malware',
     'zip-bomb',
-    'proxy',
 ];
 function getCommand() {
     return random(commands)
