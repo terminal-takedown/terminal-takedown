@@ -287,16 +287,10 @@ function keyTyped() {
                 terminal.inputText = '';
             });
         } else if (
-            gameState === 'initial' &&
+            (gameState === 'initial' || gameState === 'dead') &&
             SPECIAL_COMMANDS.hasOwnProperty(terminal.inputText)
         ) {
-            Command.commandSpeed = 0.4;
-            failCount = 7;
-            customStart = true;
-            console.log('hard mode activated');
-            terminal.success(() => {
-                terminal.inputText = '';
-            });
+            handleSpecialCommand();
         } else if (
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
@@ -409,4 +403,28 @@ function queueNewCommand(specialTimeout: number | undefined = undefined) {
         },
         specialTimeout !== undefined ? specialTimeout : COMMAND_TIMEOUT
     );
+}
+
+function handleSpecialCommand() {
+    const text = terminal.inputText;
+
+    switch (text) {
+        case 'hard mode':
+            Command.commandSpeed = 0.4;
+            failCount = 7;
+            customStart = true;
+            console.log('hard mode activated');
+            break;
+        case 'exit':
+        case 'whoami':
+            break;
+        default:
+            console.log(`no custom rule for ${this.inputText} registered !?`);
+            terminal.inputText = '';
+            return;
+    }
+
+    terminal.sendSpecialCommand(() => {
+        terminal.inputText = '';
+    });
 }
