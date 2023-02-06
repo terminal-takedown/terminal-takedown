@@ -433,7 +433,11 @@ function handleSpecialCommand() {
 }
 
 function addRandomHintMaybe() {
-    if (commandHinter.frames === 0 && random() > 0.9975) {
+    if (
+        commandHinter.frames === 0 &&
+        random() > 0.9975 &&
+        terminal.inputText.length === 0
+    ) {
         commandHinter.newHint(150);
     }
     commandHinter.draw();
