@@ -84,6 +84,7 @@ const badNames = [
     'brute-force',
     'malware',
     'zip-bomb',
+    'proxy',
 ];
 
 function getCommand(): string {
