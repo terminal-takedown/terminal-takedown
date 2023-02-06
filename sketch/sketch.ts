@@ -65,6 +65,9 @@ const commands = [
     'download more-ram',
     'backup ~',
     'start {goodName} daemon',
+    'unset proxy',
+    'bypass proxy',
+    'connect to surflan',
 ];
 
 const goodNames = [
@@ -84,7 +87,6 @@ const badNames = [
     'brute-force',
     'malware',
     'zip-bomb',
-    'proxy',
 ];
 
 function getCommand(): string {
