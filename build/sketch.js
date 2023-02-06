@@ -12,6 +12,7 @@ const terminal = new Terminal(terminal_height, (text) => {
     }
 });
 let glitch = new Glitch();
+const commandHinter = new CommandHints();
 const COMMAND_TIMEOUT = 250;
 let particles = [];
 let matrixParticles = [];
@@ -100,6 +101,7 @@ function draw() {
         text(name, windowWidth / 2 - textWidth(name) / 2, y + windowHeight * factor + 64);
     }
     else if (gameState === 'initial') {
+        addRandomHintMaybe();
         fill(200);
         textSize(32);
         const messageTop = '[WARN] Your server is under attack!';
@@ -311,4 +313,10 @@ function handleSpecialCommand() {
     terminal.sendSpecialCommand(() => {
         terminal.inputText = '';
     });
+}
+function addRandomHintMaybe() {
+    if (commandHinter.frames === 0 && random() > 0.9975) {
+        commandHinter.newHint(150);
+    }
+    commandHinter.draw();
 }
