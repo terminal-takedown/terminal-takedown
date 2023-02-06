@@ -49,13 +49,14 @@ class Terminal {
             translate(x_random, y_random);
         }
 
-        const [frames, specialCommand, specialColor] = this.specialCommandData;
-        if (frames > 0) {
+        const [specialFrames, specialCommand, specialColor] =
+            this.specialCommandData;
+        if (specialFrames > 0) {
             textSize(24);
             fill(specialColor);
             text('> ' + specialCommand, 30, windowHeight - 100);
             this.specialCommandData = [
-                frames - 1,
+                specialFrames - 1,
                 specialCommand,
                 specialColor,
             ];
