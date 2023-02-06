@@ -72,6 +72,7 @@ const badNames = [
     'brute-force',
     'malware',
     'zip-bomb',
+    'proxy',
 ];
 function getCommand() {
     return random(commands)
@@ -295,9 +296,6 @@ function handleSpecialCommand() {
             customStart = true;
             console.log('hard mode activated');
             break;
-        case COMMAND_LIST.EXIT:
-        case COMMAND_LIST.WHOAMI:
-            break;
         case COMMAND_LIST.DEBUG:
             if (terminal.inputText === 'debug' &&
                 localStorage.getItem('debug') !== 'true') {
@@ -307,10 +305,6 @@ function handleSpecialCommand() {
                 });
             }
             break;
-        default:
-            console.log(`no custom rule for ${this.inputText} registered !?`);
-            terminal.inputText = '';
-            return;
     }
     terminal.sendSpecialCommand(() => {
         terminal.inputText = '';
