@@ -448,7 +448,7 @@ function handleSpecialCommand() {
 
 function addRandomHintMaybe() {
     if (
-        commandHinter.frames === 0 &&
+        commandHinter.hintFrames === 0 &&
         random() > 0.9975 &&
         terminal.inputText.length === 0
     ) {

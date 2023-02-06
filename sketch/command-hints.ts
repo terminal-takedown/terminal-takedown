@@ -9,11 +9,11 @@ const hints = [
 ];
 
 class CommandHints {
-    frames = 0;
+    hintFrames = 0;
     current: { hint: string; height: number; length: number } = null;
 
     draw() {
-        if (this.frames > 0 && this.current !== null) {
+        if (this.hintFrames > 0 && this.current !== null) {
             fill('green');
             textSize(24);
             text(
@@ -25,12 +25,12 @@ class CommandHints {
                 this.current.height
             );
             this.current.length -= 1;
-            this.frames--;
+            this.hintFrames--;
         }
     }
 
     newHint(i: number) {
-        this.frames = i;
+        this.hintFrames = i;
         const rnd = Math.round(random(0, hints.length - 1));
         this.current = {
             hint: hints[rnd],
