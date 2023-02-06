@@ -5,6 +5,7 @@ enum COMMAND_LIST {
     WHOAMI = 'whoami',
     SHUTDOWN = 'shutdown',
     REBOOT = 'reboot',
+    LET_IT_RAIN = 'let it rain',
 }
 // type SpecialCommand -- frames,text,color
 type SpecialCommand = [number, string, string];
@@ -32,4 +33,9 @@ const SPECIAL_COMMANDS: { [key: string]: SpecialCommand } = {
     ],
 
     [COMMAND_LIST.REBOOT]: [100, 'REBOOT failed - fulfill your duty', 'red'],
+    [COMMAND_LIST.LET_IT_RAIN]: [
+        120,
+        'you want some rain, here we go',
+        'green',
+    ],
 };
