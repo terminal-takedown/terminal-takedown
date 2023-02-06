@@ -279,14 +279,6 @@ function draw() {
 function keyTyped() {
     if (key === 'Enter') {
         if (
-            terminal.inputText === 'debug' &&
-            localStorage.getItem('debug') !== 'true'
-        ) {
-            localStorage.setItem('debug', 'true');
-            terminal.success(() => {
-                terminal.inputText = '';
-            });
-        } else if (
             (gameState === 'initial' || gameState === 'dead') &&
             SPECIAL_COMMANDS.hasOwnProperty(terminal.inputText)
         ) {
@@ -409,14 +401,25 @@ function handleSpecialCommand() {
     const text = terminal.inputText;
 
     switch (text) {
-        case 'hard mode':
+        case COMMAND_LIST.HARD_MODE:
             Command.commandSpeed = 0.4;
             failCount = 7;
             customStart = true;
             console.log('hard mode activated');
             break;
-        case 'exit':
-        case 'whoami':
+        case COMMAND_LIST.EXIT:
+        case COMMAND_LIST.WHOAMI:
+            break;
+        case COMMAND_LIST.DEBUG:
+            if (
+                terminal.inputText === 'debug' &&
+                localStorage.getItem('debug') !== 'true'
+            ) {
+                localStorage.setItem('debug', 'true');
+                terminal.success(() => {
+                    terminal.inputText = '';
+                });
+            }
             break;
         default:
             console.log(`no custom rule for ${this.inputText} registered !?`);
