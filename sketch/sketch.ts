@@ -198,7 +198,9 @@ function draw() {
 
                 command = null;
                 if (failCount >= GAME_ROUNDS) {
-                    terminal.inputText = 'exit';
+                    terminal.inputText = MatrixParticle.getRandomString(
+                        random(4, 10)
+                    );
                     terminal.lockInput();
 
                     for (

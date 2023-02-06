@@ -51,4 +51,12 @@ class MatrixParticle {
             text(this.chars[i], this.posX, this.posY - MatrixParticle.size * i);
         }
     }
+
+    static getRandomString(length: number): string {
+        let rndstr = '';
+        for (let item = 0; item < length; item++) {
+            rndstr += random(alphabet);
+        }
+        return rndstr;
+    }
 }
