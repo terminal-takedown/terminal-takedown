@@ -441,7 +441,7 @@ function handleSpecialCommand() {
     switch (text) {
         case COMMAND_LIST.HARD_MODE:
             Command.commandSpeed = 0.4;
-            failCount = 7;
+            failCount = 6;
             customStart = true;
             console.log('hard mode activated');
             break;
