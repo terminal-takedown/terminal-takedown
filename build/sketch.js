@@ -132,6 +132,7 @@ function draw() {
         }
     }
     else if (gameState === 'running') {
+        lifebar();
         Sound.play(Sounds.GAME);
         glitch.drawGlitches();
         if (command !== null) {
@@ -324,7 +325,7 @@ function handleSpecialCommand() {
     switch (text) {
         case COMMAND_LIST.HARD_MODE:
             Command.commandSpeed = 0.4;
-            failCount = 7;
+            failCount = 6;
             customStart = true;
             console.log('hard mode activated');
             break;
@@ -371,4 +372,14 @@ function addMoreRain() {
                 ? [0, 0, 255]
                 : [0, 255, 0]));
     }
+}
+function lifebar() {
+    textSize(12);
+    noStroke();
+    console.warn('lives', GAME_ROUNDS - failCount);
+    let lives = '';
+    for (let index = 0; index < GAME_ROUNDS - failCount; index++) {
+        lives += '🤍';
+    }
+    text(lives, 30, 30);
 }
