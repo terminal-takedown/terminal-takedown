@@ -177,6 +177,8 @@ function draw() {
             startGame();
         }
     } else if (gameState === 'running') {
+        lifebar();
+
         Sound.play(Sounds.GAME);
         glitch.drawGlitches();
 
@@ -500,4 +502,15 @@ function addMoreRain() {
             )
         );
     }
+}
+
+function lifebar() {
+    textSize(12);
+    noStroke();
+    console.warn('lives', GAME_ROUNDS - failCount);
+    let lives = '';
+    for (let index = 0; index < GAME_ROUNDS - failCount; index++) {
+        lives += '🤍';
+    }
+    text(lives, 30, 30);
 }
