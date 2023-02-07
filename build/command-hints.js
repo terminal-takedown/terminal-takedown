@@ -9,20 +9,20 @@ const hints = [
 ];
 class CommandHints {
     constructor() {
-        this.frames = 0;
+        this.hintFrames = 0;
         this.current = null;
     }
     draw() {
-        if (this.frames > 0 && this.current !== null) {
+        if (this.hintFrames > 0 && this.current !== null) {
             fill('green');
             textSize(24);
             text(`> ${this.current.hint.substring(0, this.current.hint.length + 1 - this.current.length)}`, 30, this.current.height);
             this.current.length -= 1;
-            this.frames--;
+            this.hintFrames--;
         }
     }
     newHint(i) {
-        this.frames = i;
+        this.hintFrames = i;
         const rnd = Math.round(random(0, hints.length - 1));
         this.current = {
             hint: hints[rnd],
