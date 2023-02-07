@@ -8,7 +8,9 @@
         "start-compile": "tsc --watch",
         "start-run": "http-server . -p 3000",
         "build": "tsc --outDir build/build",
-        "postbuild": "cp index.html build/index.html && mkdir build/assets && cp assets/favicon.ico build/assets/favicon.ico && cp assets/icon.png build/assets/icon.png && cp assets/thumbnail.jpg build/assets/thumbnail.jpg && cp style.css build/style.css"
+        "postbuild": "cp index.html build/index.html && mkdir build/assets && cp style.css build/style.css && npm run copy-images && npm run copy-sounds",
+        "copy-images":"cp assets/favicon.ico build/assets/favicon.ico && cp assets/icon.png build/assets/icon.png && cp assets/thumbnail.jpg build/assets/thumbnail.jpg",
+        "copy-sounds":"cp assets/sounds/* build/assets/sounds"
     },
     "homepage": "https://github.com/Gaweph/p5-typescript-starter#readme",
     "devDependencies": {
