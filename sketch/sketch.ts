@@ -7,7 +7,6 @@ let customStart = false;
 const MAX_PITY = 3;
 let pityEasy = 0;
 let pityHard = 0;
-
 let rainActive = false;
 
 const terminal_height = 80;
@@ -27,13 +26,18 @@ let matrixParticles: MatrixParticle[] = [];
 let img: Image | null = null;
 
 function preload() {
+    soundFormats('wav', 'mp3');
     img = loadImage('assets/icon.png');
+    Sound.loadSounds();
 }
 
 function setup() {
     textFont('monospace');
     pixelDensity(1);
-    createCanvas(windowWidth, windowHeight);
+    const canvas = createCanvas(windowWidth, windowHeight);
+
+    canvas.mousePressed(() => Sound.toggleSound());
+
     queueNewCommand();
     terminal.lockInput();
     setTimeout(() => {
@@ -107,6 +111,9 @@ let score = 0;
 
 function draw() {
     background(20);
+    if (gameState !== 'boot') {
+        Sound.draw();
+    }
     textSize(32);
 
     matrixParticles.forEach((p) => p.draw());
@@ -133,6 +140,7 @@ function draw() {
             y + windowHeight * factor + 64
         );
     } else if (gameState === 'initial') {
+        Sound.play(Sounds.MENU);
         if (rainActive === true) {
             addMoreRain();
         } else {
@@ -140,6 +148,7 @@ function draw() {
         }
         fill(200);
         textSize(32);
+
         const messageTop = '[WARN] Your server is under attack!';
         const messageCommand = "[INFO] Type 'ssh server' to start defending";
         text(
@@ -168,6 +177,7 @@ function draw() {
             startGame();
         }
     } else if (gameState === 'running') {
+        Sound.play(Sounds.GAME);
         glitch.drawGlitches();
 
         if (command !== null) {
@@ -205,10 +215,12 @@ function draw() {
                     particles.push(particle);
                 }
 
+                Sound.playOnce(Sounds.NEGATIVE);
                 terminal.failedToEnterCommand();
 
                 command = null;
                 if (failCount >= GAME_ROUNDS) {
+                    Sound.playOnce(Sounds.GAME_OVER);
                     terminal.inputText = MatrixParticle.getRandomString(
                         random(4, 10)
                     );
@@ -240,6 +252,7 @@ function draw() {
         particles.forEach((p) => p.update());
         particles = particles.filter((p) => p.posY <= windowHeight);
     } else if (gameState === 'dead') {
+        Sound.play(Sounds.MENU);
         if (rainActive === true) {
             addMoreRain();
         } else {
@@ -305,11 +318,13 @@ function keyTyped() {
             (gameState === 'initial' || gameState === 'dead') &&
             terminal.inputText === 'ssh server'
         ) {
+            Sound.playOnce(Sounds.GAME_START);
             terminal.success(() => {
                 startPreRun();
             });
         } else {
             if (terminal.inputText === command?.text) {
+                Sound.playOnce(Sounds.POSITIVE);
                 terminal.success();
                 matrixParticles.push(...command.destruct());
                 command = null;
@@ -317,10 +332,12 @@ function keyTyped() {
                 ++score;
                 updateSpeed();
             } else {
+                Sound.playOnce(Sounds.NEGATIVE);
                 terminal.sentWrongCommand();
             }
         }
     } else {
+        Sound.playOnce(Sounds.TYPE);
         terminal.addKey();
     }
 }
@@ -358,6 +375,7 @@ function stopGame() {
 
 function keyPressed() {
     if (keyCode === BACKSPACE) {
+        Sound.playOnce(Sounds.TYPE);
         terminal.backspace();
     }
 
@@ -440,7 +458,7 @@ function handleSpecialCommand() {
             letItRain();
             break;
     }
-
+    Sound.playOnce(Sounds.SPECIAL_TYPE);
     terminal.sendSpecialCommand(() => {
         terminal.inputText = '';
     });
